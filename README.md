@@ -1,6 +1,6 @@
 ![](./logo.png)
 
-[![](https://img.shields.io/badge/公众号-平也-brightgreen)](#👀 公众号)
+[![](https://img.shields.io/badge/公众号-平也-brightgreen)](#公众号)
 [![](https://img.shields.io/badge/cnblogs-博客园-9cf)](https://www.cnblogs.com/pingyeaa)
 [![](https://img.shields.io/badge/juejin-掘金-blue)](https://juejin.im/user/5b879fd46fb9a019e643501e/posts)
 [![](https://img.shields.io/badge/csdn-CSDN-red)](https://blog.csdn.net/enoch612)
@@ -17,15 +17,15 @@
 - [🌈 目录概览](#-------)
 - [📚 文章列表](#-------)
   * [Golang](#golang)
-  * [数据库](#---)
+  * [数据库](#数据库)
   * [NoSQL](#nosql)
-  * [网络协议](#----)
-  * [中间件](#---)
-  * [数据结构与算法](#-------)
-- [👨‍👨‍👧‍👧 如何加入我们？](#-------------------)
-  * [添加微信](#----)
-  * [文章格式](#----)
-- [👀 公众号](#------)
+  * [网络协议](#网络协议)
+  * [中间件](#中间件)
+  * [数据结构与算法](#数据结构与算法)
+- [👨‍👨‍👧‍👧 如何加入我们？](#如何加入我们)
+  * [添加微信](#添加微信)
+  * [文章格式](#文章格式)
+- [👀 公众号](#公众号)
 
 ## 📚 文章列表
 
@@ -53,6 +53,8 @@
 
 - 「一闻秒懂」raft算法是如何做到分布式一致的
 
+--- 
+
 ## 👨‍👨‍👧‍👧 如何加入我们？
 
 ### 添加微信
@@ -70,6 +72,6 @@
 
 > 开源库[「go home」](https://github.com/pingyeaa/go-home)聚焦Go语言技能树与面试题，以协助Gopher登上更大的舞台，欢迎`go home`~
 
-## 👀 公众号
+## 公众号
 
 ![](./qrcode.png)
