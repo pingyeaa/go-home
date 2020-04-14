@@ -34,6 +34,7 @@
 
 - 语言基础
   - [「一闻秒懂」你了解goroutine和channel吗？](https://mp.weixin.qq.com/s/BPfUEV81hJUufv0U3Vg79A)
+  - [「一闻秒懂」快看！重构如此简单](https://mp.weixin.qq.com/s/R4Y1qtpRwuxI2_z2VSe9Gg)
   - 「一闻秒懂」还不懂协程线程的区别就out啦~
   - 「一闻秒懂」Go语言的协程是怎么实现的
 
@@ -49,8 +50,13 @@
 	- [Go语言库系列之aurora](https://mp.weixin.qq.com/s/eVmTAnNf3H-jvVR2v2BVYw)
 	- [Go语言库系列之email](https://mp.weixin.qq.com/s/MnwmRPG-R6corxNYvlZ4Yw)
 
+#### 分布式
+
+- [「一闻秒懂」链路追踪](https://mp.weixin.qq.com/s/AmBawNPQBJ7CF4xWxb_9Yg)
+
 #### 数据库
 
+- [「一闻秒懂」MySQL复制机制](https://mp.weixin.qq.com/s/Rx-Qwod35I8bh3iFUfEfAw)
 - 「一闻秒懂」索引一般是这样实现的
 - 「一闻秒懂」万年面试题--常见MySQL引擎及区别
 - 「一闻秒懂」你知道如何分库分表才正确吗
@@ -70,6 +76,10 @@
 #### 数据结构与算法
 
 - 「一闻秒懂」raft算法是如何做到分布式一致的
+
+#### ❤关爱程序员
+
+- [「一闻秒懂」为程序员爆肝整理的防治脱发大集锦](https://mp.weixin.qq.com/s/oJ4w5zB3XXR1Iy-KEi25nA)
 
 ---
 
