@@ -42,6 +42,12 @@
 	- [Gin框架系列02：路由与参数](https://mp.weixin.qq.com/s/T-oL3-G6qzVpbdQ41JWjRA)
 	- [Gin框架系列03：换个姿势理解中间件](https://mp.weixin.qq.com/s/_TJblVzlQemQyE6pBoVxyA)
 	- [Gin框架系列04：趣谈参数绑定与校验](https://mp.weixin.qq.com/s/_jcN3mnofMz0dhW3vU6lOA)
+	
+- 语言库
+	- [Go语言库系列之flag](https://mp.weixin.qq.com/s/CJKytErrtr3F-XiwEpyxgg)
+	- [Go语言库系列之dotsql](https://mp.weixin.qq.com/s/LoKHbXDYszkSm2qkEYgGZg)
+	- [Go语言库系列之aurora](https://mp.weixin.qq.com/s/eVmTAnNf3H-jvVR2v2BVYw)
+	- [Go语言库系列之email](https://mp.weixin.qq.com/s/MnwmRPG-R6corxNYvlZ4Yw)
 
 #### 数据库
 
