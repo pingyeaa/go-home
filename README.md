@@ -32,6 +32,7 @@
 
 #### Golang
 
+- [「一闻秒懂」你了解goroutine和channel吗？](https://mp.weixin.qq.com/s/BPfUEV81hJUufv0U3Vg79A)
 - 「一闻秒懂」还不懂协程线程的区别就out啦~
 - 「一闻秒懂」Go语言的协程是怎么实现的
 
