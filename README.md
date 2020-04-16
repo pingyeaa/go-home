@@ -10,7 +10,7 @@
 [![](https://img.shields.io/badge/jianshu-简书-orange)](https://www.jianshu.com/u/b683a986d544)
 [![](https://img.shields.io/badge/zhihu-知乎-yellow)](https://www.zhihu.com/people/ma-li-ao-de-guan-dao)
 
-聚焦Golang技能树与面试题，协助Gopher登上更大的舞台。
+聚焦Gopher的技术与成长，持续更新Go语言面试题、Golang相关技术文章。
 
 ---
 
