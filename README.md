@@ -37,10 +37,11 @@
 #### Golang
 
 - 语言基础
-  - [「一闻秒懂」你了解goroutine和channel吗？](https://mp.weixin.qq.com/s/BPfUEV81hJUufv0U3Vg79A)
-  - [「一闻秒懂」哪些情况下才需要重构](https://mp.weixin.qq.com/s/R4Y1qtpRwuxI2_z2VSe9Gg)
-  - 「一闻秒懂」还不懂协程线程的区别就out啦~
-  - 「一闻秒懂」Go语言的协程是怎么实现的
+  - [你了解goroutine和channel吗？](https://mp.weixin.qq.com/s/BPfUEV81hJUufv0U3Vg79A)
+  - [哪些情况下才需要重构](https://mp.weixin.qq.com/s/R4Y1qtpRwuxI2_z2VSe9Gg)
+  - [你知道Golang源码各目录的作用吗？](https://mp.weixin.qq.com/s/vJ-Z1tDmMVdrAyn-SZ0KLA)
+  - 还不懂协程线程的区别就out啦~
+  - Go语言的协程是怎么实现的
 
 - WEB框架
 	- [Gin框架系列01：快速上手](https://mp.weixin.qq.com/s/jBAjZQqL6klQCt9f3KtlGA)
@@ -56,34 +57,34 @@
 
 #### 分布式
 
-- [「一闻秒懂」链路追踪](https://mp.weixin.qq.com/s/AmBawNPQBJ7CF4xWxb_9Yg)
+- [你知道链路追踪的实现原理吗？](https://mp.weixin.qq.com/s/AmBawNPQBJ7CF4xWxb_9Yg)
 
 #### 数据库
 
-- [「一闻秒懂」MySQL复制机制](https://mp.weixin.qq.com/s/Rx-Qwod35I8bh3iFUfEfAw)
-- 「一闻秒懂」索引一般是这样实现的
-- 「一闻秒懂」万年面试题--常见MySQL引擎及区别
-- 「一闻秒懂」你知道如何分库分表才正确吗
+- [你知道MySQL复制机制原理吗？](https://mp.weixin.qq.com/s/Rx-Qwod35I8bh3iFUfEfAw)
+- 索引一般是这样实现的
+- 万年面试题--常见MySQL引擎及区别
+- 你知道如何分库分表才正确吗
 
 #### NoSQL
-- 「一闻秒懂」Redis是如何持久化的
+- Redis是如何持久化的
 
 #### 网络协议
-- 「一闻秒懂」为什么TCP要三次握手四次挥手
-- 「一闻秒懂」为什么一定要用https
-- 「一闻秒懂」TCP粘包怎么办
+- 为什么TCP要三次握手四次挥手
+- 为什么一定要用https
+- TCP粘包怎么办
 
 #### 中间件
 
-- 「一闻秒懂」你真的了解etcd吗？
+- 你真的了解etcd吗？
 
 #### 数据结构与算法
 
-- 「一闻秒懂」raft算法是如何做到分布式一致的
+- raft算法是如何做到分布式一致的
 
 #### ❤关爱程序员
 
-- [「一闻秒懂」为程序员爆肝整理的防治脱发大集锦](https://mp.weixin.qq.com/s/oJ4w5zB3XXR1Iy-KEi25nA)
+- [为程序员爆肝整理的防治脱发大集锦](https://mp.weixin.qq.com/s/oJ4w5zB3XXR1Iy-KEi25nA)
 
 ---
 
