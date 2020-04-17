@@ -39,8 +39,6 @@
 - 语言基础
   - [你了解goroutine和channel吗？](https://mp.weixin.qq.com/s/BPfUEV81hJUufv0U3Vg79A)
   - [哪些情况下才需要重构](https://mp.weixin.qq.com/s/R4Y1qtpRwuxI2_z2VSe9Gg)
-  - 还不懂协程线程的区别就out啦~
-  - Go语言的协程是怎么实现的
 - 底层原理
   - [Go语言的GPM调度器是什么？](https://mp.weixin.qq.com/s/NFfhKQgcM3qrwAD5yYy-XQ)
   - [你知道Golang源码各目录的作用吗？](https://mp.weixin.qq.com/s/vJ-Z1tDmMVdrAyn-SZ0KLA)
