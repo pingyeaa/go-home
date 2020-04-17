@@ -39,17 +39,16 @@
 - 语言基础
   - [你了解goroutine和channel吗？](https://mp.weixin.qq.com/s/BPfUEV81hJUufv0U3Vg79A)
   - [哪些情况下才需要重构](https://mp.weixin.qq.com/s/R4Y1qtpRwuxI2_z2VSe9Gg)
-  - [你知道Golang源码各目录的作用吗？](https://mp.weixin.qq.com/s/vJ-Z1tDmMVdrAyn-SZ0KLA)
-  - [Go语言的GPM调度器是什么？](https://mp.weixin.qq.com/s/NFfhKQgcM3qrwAD5yYy-XQ)
   - 还不懂协程线程的区别就out啦~
-- Go语言的协程是怎么实现的
-  
+  - Go语言的协程是怎么实现的
+- 底层原理
+  - [Go语言的GPM调度器是什么？](https://mp.weixin.qq.com/s/NFfhKQgcM3qrwAD5yYy-XQ)
+  - [你知道Golang源码各目录的作用吗？](https://mp.weixin.qq.com/s/vJ-Z1tDmMVdrAyn-SZ0KLA)
 - WEB框架
 	- [Gin框架系列01：快速上手](https://mp.weixin.qq.com/s/jBAjZQqL6klQCt9f3KtlGA)
 	- [Gin框架系列02：路由与参数](https://mp.weixin.qq.com/s/T-oL3-G6qzVpbdQ41JWjRA)
 	- [Gin框架系列03：换个姿势理解中间件](https://mp.weixin.qq.com/s/_TJblVzlQemQyE6pBoVxyA)
 	- [Gin框架系列04：趣谈参数绑定与校验](https://mp.weixin.qq.com/s/_jcN3mnofMz0dhW3vU6lOA)
-	
 - 语言库
 	- [Go语言库系列之flag](https://mp.weixin.qq.com/s/CJKytErrtr3F-XiwEpyxgg)
 	- [Go语言库系列之dotsql](https://mp.weixin.qq.com/s/LoKHbXDYszkSm2qkEYgGZg)
