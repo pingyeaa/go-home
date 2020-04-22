@@ -204,9 +204,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
             首页
           </a>
@@ -214,9 +214,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags%20" rel="section">
+          <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
             标签
           </a>
@@ -224,9 +224,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories%20" rel="section">
+          <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
             分类
           </a>
@@ -234,9 +234,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives%20" rel="section">
+          <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
             归档
           </a>
@@ -244,9 +244,9 @@
       
         
         <li class="menu-item menu-item-schedule">
-          <a href="/schedule%20" rel="section">
+          <a href="/schedule" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
             日程表
           </a>
@@ -254,9 +254,9 @@
       
         
         <li class="menu-item menu-item-sitemap">
-          <a href="/sitemap.xml%20" rel="section">
+          <a href="/sitemap.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
             站点地图
           </a>
@@ -433,16 +433,50 @@
       
         
           
-          最近机缘巧合的购置了域名和服务器，不用实在是浪费，再加上一直没有属于自己的个人网站，所以打算用hexo在服务器上玩一下，这样也就不用再纠结用Github pages还是Gitee pages了。当然，今天的主题并不是博客搭建，而是如何利用Github的钩子，将博客代码部署到服务器上。
-毕竟Githu
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/22/other/github-webhooks/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <p>最近机缘巧合的购置了域名和服务器，不用实在是浪费，再加上一直没有属于自己的个人网站，所以打算用hexo在服务器上玩一下，这样也就不用再纠结用Github pages还是Gitee pages了。当然，今天的主题并不是博客搭建，而是如何利用Github的钩子，将博客代码部署到服务器上。</p>
+<p>毕竟Github的钩子已经历史悠久了，网上有很多开源项目可以拿来用，所以我并没有造轮子，而是去找了5K star的开源Go项目<code>webhook</code>，这个工具的作用是接收Github仓库的变动通知，然后调用你配置好的shell脚本，脚本可以写上代码拉取的命令或是编译的操作等，具体根据个人需求而定。简而言之，它只起着拉通Github与你服务器的作用。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png" alt="file"></p>
+<h3 id="webhook工具安装"><a href="#webhook工具安装" class="headerlink" title="webhook工具安装"></a>webhook工具安装</h3><p>因为webhook是Go语言开发的，所以要先安装Go语言。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y golang</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以用go命令安装webhook了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/adnanh/webhook</span><br></pre></td></tr></table></figure>
+
+<p>命令安装位置可以通过<code>go env</code>查看，GOPATH就是命令安装路径，比如我的命令就安装在/root/go/bin/webhook。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">go env</span><br><span class="line">...</span><br><span class="line">GOOS="linux"</span><br><span class="line">GOPATH="/root/go"</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成ssh-key"><a href="#生成ssh-key" class="headerlink" title="生成ssh key"></a>生成ssh key</h3><p>在编写脚本之前确保服务器有权限拉取github代码，如果已经做了配置可跳过本节去看<a href="#部署脚本编写">部署脚本编写</a>。ssh key是代码托管平台（github、gitee、coding、gitlab等）鉴别你是否有权拉取代码的身份标识，生成只需一行命令和一路回车就行了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa): </span><br><span class="line">Enter passphrase (empty for no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:M6sCf/J/hOu3zLxMkFUVmv3iWIa30CfbxiWqmWCt1YE root@iZwz96y36tk2ecnykzituxZ</span><br><span class="line">The key's randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|            ..o. |</span><br><span class="line">|           . o   |</span><br><span class="line">|          . o    |</span><br><span class="line">|       . o .     |</span><br><span class="line">|      E S.  .    |</span><br><span class="line">|  .  . ..Oo ..   |</span><br><span class="line">|   oo o ==Boo .  |</span><br><span class="line">|   .++.+o#== .   |</span><br><span class="line">|    .=*+=+@o     |</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
+
+<p>生成后可通过<code>cat ~/.ssh/id_rsa.pub</code>命令查看，最后将key加入github即可，加法不再赘述，请自行谷歌。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br><span class="line"></span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQHBAAABAQCv7LGVJUFdcLL+HZyRFTQIQCdre61Gch76lDVpmWSX9BGGRU3iQS7EU5qApFn1VSvt+yf4rMt2LEkuxGCm1wIyBKZ6LYDViZBeTAfx4BcM1mcpxOX6I/+r07mQ4llTz+poQB1Zp9Y60uk0tbGOVWlCoDBEvf9qeEnQ0qEczEkv7wcawV6pVhlXjFKZgq0EOQbCYoWMvPUl+dwDbTcl/h+7At1nlgfF7IuRHlKf18qvgnTRT2wpiuz4pWdoAi8LcY1JiR1z5OB0oCJ2euhyDND39G2NxZRS1FIVdgCEvioHtdoHOSoWBlcSj0fLFSnscBfRBrCd7yhOP7fFKfrowHMj root@iZwz96y36tk2ecnykzituxZ</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署脚本编写"><a href="#部署脚本编写" class="headerlink" title="部署脚本编写"></a>部署脚本编写</h3><p>该shell脚本的主要目的是从github拉取代码，脚本内容很简单，只做了目录的简要判断，代码目录存在则更新，不存在则克隆仓库，工作目录和仓库名称、地址请换成自己的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cd /home/www/website</span><br><span class="line"></span><br><span class="line">if [ ! -d "go-home" ]; then</span><br><span class="line">  git clone https://github.com/pingyeaa/go-home.git</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">cd go-home</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+<h3 id="webhook配置与启动"><a href="#webhook配置与启动" class="headerlink" title="webhook配置与启动"></a>webhook配置与启动</h3><p>编写配置文件hooks.json，格式如下。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"deploy-webhook"</span>,</span><br><span class="line">    <span class="attr">"execute-command"</span>: <span class="string">"deploy.sh"</span>,</span><br><span class="line">    <span class="attr">"command-working-directory"</span>: <span class="string">"/home"</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>id：钩子的id，可自定义</li>
+<li>execute-command：要执行的脚本名，就是刚才编写的部署脚本</li>
+<li>command-working-directory：脚本所在目录</li>
+</ul>
+<p>完成后通过webhook命令启动，可以看到id为deploy-webhook的配置已经加载了，我们需要注意的是监听的端口和路径，等下要用到。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/root/go/bin/webhook -hooks hooks.json -verbose</span><br><span class="line"></span><br><span class="line">[webhook] 2020/04/22 15:18:22 version 2.6.11 starting</span><br><span class="line">[webhook] 2020/04/22 15:18:22 setting up os signal watcher</span><br><span class="line">[webhook] 2020/04/22 15:18:22 attempting to load hooks from hooks.json</span><br><span class="line">[webhook] 2020/04/22 15:18:22 found 1 hook(s) in file</span><br><span class="line">[webhook] 2020/04/22 15:18:22   loaded: deploy-webhook</span><br><span class="line">[webhook] 2020/04/22 15:18:22 serving hooks on http://0.0.0.0:9000/hooks/&#123;id&#125;</span><br><span class="line">[webhook] 2020/04/22 15:18:22 os signal watcher ready</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://0.0.0.0:9000/hooks/&#123;id&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Github-Webhooks配置"><a href="#Github-Webhooks配置" class="headerlink" title="Github Webhooks配置"></a>Github Webhooks配置</h3><p>现在服务器已经启动了webhook程序监听9000端口，接下来仅需要告诉Github这个地址和端口就好了。</p>
+<p>打开仓库设置页，添加webhook。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png" alt=""></p>
+<p>配置webhooks，Payload URL就是要通知的地址，把刚才打印出的端口和路径填上即可，其他默认。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541102651.png" alt="file"></p>
+<p>现在可以提交代码测试了，如果推送失败Github中会有错误提示，同样的，成功不仅在Github中能看到，服务器的打印日志也有记录。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541394355.png" alt="file"></p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541482026.png" alt="file"></p>
+
+          
         
       
     </div>
@@ -571,20 +605,91 @@
       
         
           
+            <blockquote>
+<p>😋我是平也，这有一个专注Gopher技术成长的开源项目<a href="https://github.com/pingyeaa/go-home" target="_blank" rel="noopener">「go home」</a></p>
+</blockquote>
+<h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>相信很多人都听说过Go语言天然支持高并发，原因是内部有协程（goroutine）加持，可以在一个进程中启动成千上万个协程。那么，它凭什么做到如此高的并发呢？那就需要先了解什么是并发模型。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1586933074098.png" alt="file"></p>
+<h2 id="并发模型"><a href="#并发模型" class="headerlink" title="并发模型"></a>并发模型</h2><p>著名的C++专家Herb Sutter曾经说过“免费的午餐已经终结”。为了让代码运行的更快，单纯依靠更快的硬件已经无法得到满足，我们需要利用多核来挖掘并行的价值，而并发模型的目的就是来告诉你不同执行实体之间是如何协作的。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1586933150449.png" alt="file"></p>
+<p>当然，不同的并发模型的协作方式也不尽相同，常见的并发模型有七种：</p>
+<ul>
+<li>线程与锁</li>
+<li>函数式编程</li>
+<li>Clojure之道</li>
+<li>actor</li>
+<li>通讯顺序进程（CSP）</li>
+<li>数据级并行</li>
+<li>Lambda架构</li>
+</ul>
+<p>而今天，我们只讲与Go语言相关的并发模型CSP，感兴趣的同学可以自行查阅书籍《七周七并发模型》。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1586933889538.png" alt="file"></p>
+<h2 id="CSP篇"><a href="#CSP篇" class="headerlink" title="CSP篇"></a>CSP篇</h2><p>CSP，全称Communicating Sequential Processes，意为通讯顺序进程，它是七大并发模型中的一种，它的核心观念是将两个并发执行的实体通过通道channel连接起来，所有的消息都通过channel传输。其实CSP概念早在1978年就被<a href="#东尼·霍尔">东尼·霍尔</a>提出，由于近来Go语言的兴起，CSP又火了起来。</p>
+<p>那么CSP与Go语言有什么关系呢？接下来我们来看Go语言对CSP并发模型的实现——GPM调度模型。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1586936057139.png" alt="file"></p>
+<h2 id="GPM调度模型"><a href="#GPM调度模型" class="headerlink" title="GPM调度模型"></a>GPM调度模型</h2><p>GPM代表了三个角色，分别是Goroutine、Processor、Machine。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587000414117.png" alt="file"></p>
+<ul>
+<li>Goroutine：就是咱们常用的用go关键字创建的执行体，它对应一个结构体g，结构体里保存了goroutine的堆栈信息</li>
+<li>Machine：表示操作系统的线程</li>
+<li>Processor：表示处理器，有了它才能建立G、M的联系</li>
+</ul>
+<h3 id="Goroutine"><a href="#Goroutine" class="headerlink" title="Goroutine"></a>Goroutine</h3><p>Goroutine就是代码中使用go关键词创建的执行单元，也是大家熟知的有“轻量级线程”之称的协程，协程是不为操作系统所知的，它由编程语言层面实现，上下文切换不需要经过内核态，再加上协程占用的内存空间极小，所以有着非常大的发展潜力。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;&#125;()</span><br></pre></td></tr></table></figure>
+
+<p>在Go语言中，Goroutine由一个名为<code>runtime.go</code>的结构体表示，该结构体非常复杂，有40多个成员变量，主要存储执行栈、状态、当前占用的线程、调度相关的数据。还有玩大家很想获取的goroutine标识，但是很抱歉，官方考虑到Go语言的发展，设置成私有了，不给你调用😏。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> g <span class="keyword">struct</span> &#123;</span><br><span class="line">	stack <span class="keyword">struct</span> &#123;</span><br><span class="line">		lo <span class="keyword">uintptr</span></span><br><span class="line">		hi <span class="keyword">uintptr</span></span><br><span class="line">	&#125; 							<span class="comment">// 栈内存：[stack.lo, stack.hi)</span></span><br><span class="line">	stackguard0	<span class="keyword">uintptr</span></span><br><span class="line">	stackguard1 <span class="keyword">uintptr</span></span><br><span class="line"></span><br><span class="line">	_panic       *_panic</span><br><span class="line">	_defer       *_defer</span><br><span class="line">	m            *m				<span class="comment">// 当前的 m</span></span><br><span class="line">	sched        gobuf</span><br><span class="line">	stktopsp     <span class="keyword">uintptr</span>		<span class="comment">// 期望 sp 位于栈顶，用于回溯检查</span></span><br><span class="line">	param        unsafe.Pointer <span class="comment">// wakeup 唤醒时候传递的参数</span></span><br><span class="line">	atomicstatus <span class="keyword">uint32</span></span><br><span class="line">	goid         <span class="keyword">int64</span></span><br><span class="line">	preempt      <span class="keyword">bool</span>       	<span class="comment">// 抢占信号，stackguard0 = stackpreempt 的副本</span></span><br><span class="line">	timer        *timer         <span class="comment">// 为 time.Sleep 缓存的计时器</span></span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Goroutine调度相关的数据存储在sched，在协程切换、恢复上下文的时候用到。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> gobuf <span class="keyword">struct</span> &#123;</span><br><span class="line">	sp   <span class="keyword">uintptr</span></span><br><span class="line">	pc   <span class="keyword">uintptr</span></span><br><span class="line">	g    guintptr</span><br><span class="line">	ret  sys.Uintreg</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Machine"><a href="#Machine" class="headerlink" title="Machine"></a>Machine</h3><p>M就是对应操作系统的线程，最多会有GOMAXPROCS个活跃线程能够正常运行，默认情况下GOMAXPROCS被设置为内核数，假如有四个内核，那么默认就创建四个线程，每一个线程对应一个runtime.m结构体。线程数等于CPU个数的原因是，每个线程分配到一个CPU上就不至于出现线程的上下文切换，可以保证系统开销降到最低。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> m <span class="keyword">struct</span> &#123;</span><br><span class="line">	g0   *g </span><br><span class="line">	curg *g</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>M里面存了两个比较重要的东西，一个是g0，一个是curg。</p>
+<ul>
+<li>g0：会深度参与运行时的调度过程，比如goroutine的创建、内存分配等</li>
+<li>curg：代表当前正在线程上执行的goroutine。</li>
+</ul>
+<p>刚才说P是负责M与G的关联，所以M里面还要存储与P相关的数据。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> m <span class="keyword">struct</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">	p             puintptr</span><br><span class="line">	nextp         puintptr</span><br><span class="line">	oldp          puintptr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>p：正在运行代码的处理器</li>
+<li>nextp：暂存的处理器</li>
+<li>old：系统调用之前的线程的处理器</li>
+</ul>
+<h3 id="Processor"><a href="#Processor" class="headerlink" title="Processor"></a>Processor</h3><p>Proccessor负责Machine与Goroutine的连接，它能提供线程需要的上下文环境，也能分配G到它应该去的线程上执行，有了它，每个G都能得到合理的调用，每个线程都不再浑水摸鱼，真是居家必备之良品。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587113752718.png" alt="file"></p>
+<p>同样的，处理器的数量也是默认按照GOMAXPROCS来设置的，与线程的数量一一对应。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> p <span class="keyword">struct</span> &#123;</span><br><span class="line">	m           muintptr</span><br><span class="line"></span><br><span class="line">	runqhead <span class="keyword">uint32</span></span><br><span class="line">	runqtail <span class="keyword">uint32</span></span><br><span class="line">	runq     [<span class="number">256</span>]guintptr</span><br><span class="line">	runnext guintptr</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结构体P中存储了性能追踪、垃圾回收、计时器等相关的字段外，还存储了处理器的待运行队列，队列中存储的是待执行的Goroutine列表。</p>
+<h3 id="三者的关系"><a href="#三者的关系" class="headerlink" title="三者的关系"></a>三者的关系</h3><p>首先，默认启动四个线程四个处理器，然后互相绑定。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587114801967.png" alt="file"></p>
+<p>这个时候，一个Goroutine结构体被创建，在进行函数体地址、参数起始地址、参数长度等信息以及调度相关属性更新之后，它就要进到一个处理器的队列等待发车。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587115359415.png" alt="file"></p>
+<p>啥，又创建了一个G？那就轮流往其他P里面放呗，相信你排队取号的时候看到其他窗口没人排队也会过去的。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587115552203.png" alt="file"></p>
+<p>假如有很多G，都塞满了怎么办呢？那就不把G塞到处理器的私有队列里了，而是把它塞到全局队列里（候车大厅）。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587115783681.png" alt="file"></p>
+<p>除了往里塞之外，M这边还要疯狂往外取，首先去处理器的私有队列里取G执行，如果取完的话就去全局队列取，如果全局队列里也没有的话，就去其他处理器队列里偷，哇，这么饥渴，简直是恶魔啊！</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587116221683.png" alt="file"></p>
+<p>如果哪里都没找到要执行的G呢？那M就会因为太失望和P断开关系，然后去睡觉（idle）了。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587116525502.png" alt="file"></p>
+<p>那如果两个Goroutine正在通过channel做一些恩恩爱爱的事阻塞住了怎么办，难道M要等他们完事了再继续执行？显然不会，M并不稀罕这对Go男女，而会转身去找别的G执行。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587116986094.png" alt="file"></p>
+<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>如果G进行了系统调用syscall，M也会跟着进入系统调用状态，那么这个P留在这里就浪费了，怎么办呢？这点精妙之处在于，P不会傻傻的等待G和M系统调用完成，而会去找其他比较闲的M执行其他的G。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587123545411.png" alt="file"></p>
+<p>当G完成了系统调用，因为要继续往下执行，所以必须要再找一个空闲的处理器发车。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587124060921.png" alt="file"></p>
+<p>如果没有空闲的处理器了，那就只能把G放回全局队列当中等待分配。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587124627966.png" alt="file"></p>
+<h3 id="sysmon"><a href="#sysmon" class="headerlink" title="sysmon"></a>sysmon</h3><p>sysmon是我们的保洁阿姨，它是一个M，又叫监控线程，不需要P就可以独立运行，每20us~10ms会被唤醒一次出来打扫卫生，主要工作就是回收垃圾、回收长时间系统调度阻塞的P、向长时间运行的G发出抢占调度等等。</p>
+<h2 id="词条解释"><a href="#词条解释" class="headerlink" title="词条解释"></a>词条解释</h2><h3 id="东尼·霍尔"><a href="#东尼·霍尔" class="headerlink" title="东尼·霍尔"></a>东尼·霍尔</h3><p>东尼·霍尔，英国计算机科学家，图灵奖得主，他设计了牛气冲天的快速排序算法、霍尔逻辑以及CSP模型。2011年获颁约翰·冯诺依曼奖。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1586934654476.png" alt="file"></p>
+
           
-😋我是平也，这有一个专注Gopher技术成长的开源项目「go home」
-
-导读相信很多人都听说过Go语言天然支持高并发，原因是内部有协程（goroutine）加持，可以在一个进程中启动成千上万个协程。那么，它凭什么做到如此高的并发呢？那就需要先了解什么是并发模型。
-
-并发模型著名的C++专家H
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/21/gpm/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
         
       
     </div>
@@ -668,7 +773,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives%20%7C%7C%20archive">
+                <a href="/archives">
               
                   <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
