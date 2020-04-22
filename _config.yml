@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 平也的技术博客
+title: 平也
 subtitle: '专注技术原理与Go语言'
 description: '穷不失志，富不癫狂'
 keywords: Go,Golang,面试,教程,技术原理,大厂,Gohper,Go Home
 author: 平也
-language: zh-Hans
+language: zh-CN
 timezone: 'Asia/Shanghai'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://pingyeaa.com/
+url: http://120.76.128.139
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:

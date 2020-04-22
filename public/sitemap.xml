@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://pingyeaa.com/2020/04/21/golang/gpm/</loc>
+    <loc>http://120.76.128.139/2020/04/22/other/github-webhooks/</loc>
     
-    <lastmod>2020-04-22T08:34:14.456Z</lastmod>
+    <lastmod>2020-04-22T12:22:51.741Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://pingyeaa.com/categories/index.html</loc>
+    <loc>http://120.76.128.139/2020/04/21/golang/gpm/</loc>
+    
+    <lastmod>2020-04-22T12:15:46.732Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://120.76.128.139/categories/index.html</loc>
     
     <lastmod>2020-04-22T08:32:02.176Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://pingyeaa.com/tags/index.html</loc>
+    <loc>http://120.76.128.139/tags/index.html</loc>
     
     <lastmod>2020-04-22T08:31:51.392Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://pingyeaa.com/2020/04/22/other/github-webhooks/</loc>
-    
-    <lastmod>2020-04-22T07:51:03.364Z</lastmod>
     
   </url>
   

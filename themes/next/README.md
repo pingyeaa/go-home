@@ -1,374 +1,154 @@
-<h1 align="center">This repository is no longer maintained! :warning:</h1>
-<h2 align="center">The community-maintained version is here: <a href="https://github.com/theme-next/hexo-theme-next">NexT v6 and v7 :triangular_flag_on_post:</a></h2>
+<div align="right">
+  Language:
+  🇺🇸
+  <a title="Chinese" href="docs/zh-CN/README.md">🇨🇳</a>
+  <a title="Russian" href="docs/ru/README.md">🇷🇺</a>
+</div>
 
-<h1 align="center">NexT</h1>
+# <div align="center"><a title="NexT website repository" href="https://github.com/theme-next/theme-next.org"><img align="center" width="56" height="56" src="https://raw.githubusercontent.com/theme-next/hexo-theme-next/master/source/images/logo.svg?sanitize=true"></a> e x T</div>
 
-<p align="center">NexT is a high quality elegant <a href="http://hexo.io">Hexo</a> theme. It is crafted from scratch, with love.</p>
-
-[![gitter-image]][gitter-url]
-[![mnt-image]](https://github.com/theme-next/hexo-theme-next)
-[![travis-image]][travis-url]
-[![rel-image]][releases-url]
-[![hexo-image]][hexo-url]
-[![lic-image]](LICENSE)
-
-* [Chinese Documentation](README.cn.md)
+<p align="center">
+  «NexT» is a high quality elegant <a href="https://hexo.io">Hexo</a> theme. It is crafted from scratch with love.
+<br>
+<br>
+  <a href="https://www.npmjs.com/package/hexo-theme-next"><img src="https://img.shields.io/github/package-json/v/theme-next/hexo-theme-next?style=flat-square"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%3E=10.9.0-green?style=flat-square"></a>
+  <a href="https://hexo.io"><img src="https://img.shields.io/badge/hexo-%3E=4.0.0-blue?style=flat-square&logo=hexo"></a>
+  <a href="https://github.com/theme-next/hexo-theme-next/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-%20AGPL-orange?style=flat-square&logo=gnu"></a>
+<br>
+  <a href="https://bestpractices.coreinfrastructure.org/projects/2625"><img src="https://img.shields.io/cii/level/2625?style=flat-square" title="Core Infrastructure Initiative Best Practices"></a>
+  <a href="https://travis-ci.org/theme-next/hexo-theme-next?branch=master"><img src="https://img.shields.io/travis/theme-next/hexo-theme-next/master?style=flat-square&logo=travis%20ci" title="Travis CI [Linux]"></a>
+  <a href="https://app.codacy.com/manual/theme-next/hexo-theme-next/dashboard"><img src="https://img.shields.io/codacy/grade/72f7fe7609c2438a92069f448e5a341a/master?style=flat-square&logo=codacy" title="Project Grade"></a>
+  <img src="https://img.shields.io/snyk/vulnerabilities/github/theme-next/hexo-theme-next?style=flat-square" title="Vulnerabilities">
+<br>
+  <img src="https://user-images.githubusercontent.com/16272760/63487983-da41b080-c4df-11e9-951c-64883a8a5e9b.png">
+</p>
 
 ## Live Preview
 
-* :heart_decoration: Muse scheme: [LEAFERx](https://leaferx.online) | [XiaMo](https://notes.wanghao.work) | [OAwan](https://oawan.me)
-* :six_pointed_star: Mist scheme: [Jeff](https://blog.zzbd.org) | [uchuhimo](http://uchuhimo.me) | [xirong](http://www.ixirong.com)
-* :pisces: Pisces scheme: [Vi](http://notes.iissnan.com) | [Acris](https://acris.me) | [Rainy](https://rainylog.com)
-* :gemini: Gemini scheme: [Ivan.Nginx](https://almostover.ru) | [Raincal](https://raincal.com) | [Dandy](https://dandyxu.me)
-
-More NexT examples [here](https://github.com/iissnan/hexo-theme-next/issues/119).
+<p align="center">
+  💟 <a href="https://muse.theme-next.org">Muse</a> | 🔯 <a href="https://mist.theme-next.org">Mist</a> | ♓️ <a href="https://pisces.theme-next.org">Pisces</a> | ♊️ <a href="https://theme-next.org">Gemini</a>
+<br>
+<br>
+  More «NexT» examples <a href="https://github.com/theme-next/awesome-next#live-preview">here</a>.
+</p>
 
 ## Installation
 
-**1.** Change dir to **hexo root** directory. There must be `node_modules`, `source`, `themes` and other directories:
-   ```sh
-   $ cd hexo
-   $ ls
-   _config.yml  node_modules  package.json  public  scaffolds  source  themes
-   ```
+The simplest way to install is to clone the entire repository:
 
-**2.** Get theme from GitHub. There are several variants to do it:
+```sh
+$ cd hexo
+$ git clone https://github.com/theme-next/hexo-theme-next themes/next
+```
 
-### Download [latest release version][releases-latest-url].
-   At most cases **stable**. Recommended for most users.
+Or you can see [detailed installation instructions][docs-installation-url] if you want any other variant.
 
-   [![curl-tar-wget-image]][curl-tar-wget-url]
+## Plugins
 
-   ```sh
-   $ mkdir themes/next
-   $ curl -s https://api.github.com/repos/iissnan/hexo-theme-next/releases/latest | grep tarball_url | cut -d '"' -f 4 | wget -i - -O- | tar -zx -C themes/next --strip-components=1
-   ```
+NexT supports a large number of third-party plugins, which can be easily configured.
 
-### Download [tagged release version][releases-url].
-   You must define version. Replace `v5.1.2` with any version from [tags list][tags-url].
+For example, if you want to enable `pjax` on your site, just set `pjax` to `true` in NexT config file:
 
-   [![curl-tar-image]][curl-tar-url]
+```yml
+# Easily enable fast Ajax navigation on your website.
+# Dependencies: https://github.com/theme-next/theme-next-pjax
+pjax: true
+```
 
-   ```sh
-   $ mkdir themes/next
-   $ curl -L https://api.github.com/repos/iissnan/hexo-theme-next/tarball/v5.1.2 | tar -zxv -C themes/next --strip-components=1
-   ```
+Then visit the «Dependencies» link to get the installation instructions of this module.
 
-   [![git-image]][git-url]
+### Configure CDN
 
-   ```sh
-   $ git clone --branch v5.1.2 https://github.com/iissnan/hexo-theme-next themes/next
-   ```
+If you want to specify a CDN link for any plugins, you need to set / update the CDN link.
 
-### Download [latest master branch][download-latest-url].
-   May be **unstable**, but includes latest features. Recommended for developers.
+For example, if you want to use `mediumzoom` and load the plugin via CDN, go to NexT config and see:
 
-   [![curl-tar-image]][curl-tar-url]
-
-   ```sh
-   $ mkdir themes/next
-   $ curl -L https://api.github.com/repos/iissnan/hexo-theme-next/tarball | tar -zxv -C themes/next --strip-components=1
-   ```
-
-   [![git-image]][git-url]
-
-   ```sh
-   $ git clone https://github.com/iissnan/hexo-theme-next themes/next
-   ```
-
-   Clone command will give you the **whole repository**. And in any time you can switch to any tagged release.\
-   Get tags list:
-
-   ```sh
-   $ cd themes/next
-   $ git tag -l
-   …
-   v5.0.0
-   v5.0.1
-   v5.1.0
-   v5.1.1
-   v5.1.2
-   ```
-
-   For example, you want to switch on `v5.1.0` [tagged release version][tags-url]. Input the following command:
-
-   ```sh
-   $ git checkout tags/v5.1.0
-   Note: checking out 'tags/v5.1.0'.
-   …
-   HEAD now on 1f72f68... CSS: Remove global list-style setting of ul
-   ```
-
-   And if you want to switch back on [master branch][commits-url], input this command:
-
-   ```sh
-   $ git checkout master
-   ```
-
-**3.** Set theme in main **hexo root config** `_config.yml` file:
-
-    theme: next
-
-### Bugs
-For those who also encounter **Error: Cannot find module 'hexo-util'** [issue](https://github.com/iissnan/hexo-theme-next/issues/1490), please check your NPM version.
-
-- `> 3`: Still not work. Please remove `node_modules` directory and reinstall using `npm install`.
-- `< 3`: Please add `hexo-util` explicitly via `npm install --save-dev hexo-util` to you site package deps.
+```yml
+vendors:
+  # ...
+  # Some contents...
+  # ...
+  mediumzoom: # Set or update mediumzoom CDN URL.
+```
 
 ## Update
+
+NexT releases new versions every month. You can update to latest master branch by the following command:
 
 ```sh
 $ cd themes/next
 $ git pull
 ```
 
-### Bugs
-
-> Commit your changes or stash them before you can merge
-
-You must Commit, Stash or Discard local changes. See [here](https://stackoverflow.com/a/15745424/5861495) how to do it.
-
-### Theme configurations using Hexo data files ([#328](https://github.com/iissnan/hexo-theme-next/issues/328))
-
-Currently, it is not smooth to update NexT theme from pulling or downloading new releases. It is quite often running into conflict status when updating NexT theme via `git pull`, or need to merge configurations manually when upgrading to new releases.
-
- At present, NexT encourages users to store some options in site's `_config.yml` and other options in theme's `_config.yml`. This approach is applicable, but has some drawbacks:
-1. Configurations are splited into two pieces
-2. Users maybe confuse which place should be for options
-
-In order to resolve this issue, NexT will take advantage of Hexo [Data files](https://hexo.io/docs/data-files.html). Because Data files is introduced in Hexo 3, so you need upgrade Hexo to 3.0 (or above) to use this feature.
-
-If you prefer Hexo 2.x, you can still use the old approach for configurations. NexT is still compatible with Hexo 2.x.
-
-#### Benefits
-
-With this feature, now you can put all your configurations into one place (`source/_data/next.yml`), you don't need to touch `next/_config.yml`. If there are any new options in new releases, you just need to copy those options from `next/_config.yml`, paste into `_data/next.yml` and set their values to whatever you want.
-
-#### How to use this feature
-
-1. Please ensure you are using Hexo 3 (or above)
-2. Create an file named `next.yml` in site's `source/_data` directory (create `_data` directory if it did not exist)
-3. Copy NexT theme options both in site's `_config.yml` and theme's `_config.yml` into `next.yml`.
-4. Use `--config source/_data/next.yml` parameter to start server, generate or deploy.\
-   For example: `hexo clean --config source/_data/next.yml && hexo g --config source/_data/next.yml`.
-
-## Features
-
-### Multiple languages support, including:
-:cn: Simplified Chinese & Traditional Chinese.<br>
-:us: English<br>
-:ru: Russian<br>
-:fr: French<br>
-:de: German<br>
-:jp: Japanese<br>
-:indonesia: Indonesian<br>
-:portugal: Portuguese (Brazil)<br>
-:kr: Korean<br>
-:it: Italian<br>
-:netherlands: Dutch<br>
-:vietnam: Vietnamese
-
-Default language is English.
-
-```yml
-language: en
-# language: zh-Hans
-# language: zh-hk
-# language: zh-tw
-# language: ru
-# language: fr-FR
-# language: de
-# language: ja
-# language: id
-# language: pt
-# language: pt-BR
-# language: ko
-# language: it
-# language: nl-NL
-# language: vi
-```
-
-Set `language` field as following in site `_config.yml` to change to Chinese.
-
-```yml
-language: zh-Hans
-```
-
-### Comment support.
-
-NexT has native support for `DuoShuo` and `Disqus` comment systems.
-
-Add the following snippets to your `_config.yml`:
-
-```yml
-duoshuo:
-  enable: true
-  shortname: your-duoshuo-shortname
-```
-
-OR
-
-```yml
-disqus_shortname: your-disqus-shortname
-```
-
-### Tags page.
-
-> Add a tags page contains all tags in your site.
-
-- Create a page named `tags`
-
-        hexo new page "tags"
-
-- Edit tags page, set page type to `tags`.
-
-        title: All tags
-        date: 2014-12-22 12:39:04
-        type: "tags"
-
-- Add `tags` to theme `_config.yml`:
-
-        menu:
-          home: /
-          archives: /archives
-          tags: /tags
-
-### Categories page.
-
-> Add a categories page contains all categories in your site.
-
-- Create a page named `categories`
-
-        hexo new page "categories"
-
-- Edit categories page, set page type to `categories`.
-
-        title: All categories
-        date: 2014-12-22 12:39:04
-        type: "categories"
-
-- Add `categories` to theme `_config.yml`:
-
-        menu:
-          home: /
-          archives: /archives
-          categories: /categories
-
-### Social Media
-
-NexT can automatically add links to your Social Media accounts:
-
-```yml
-social:
-  GitHub: your-github-url
-  Twitter: your-twitter-url
-  Weibo: your-weibo-url
-  DouBan: your-douban-url
-  ZhiHu: your-zhihu-url
-```
-
-### Feed link.
-
-> Show a feed link.
-
-Set `rss` field in theme's `_config.yml`, as the following value:
-
-1. `rss: false` will totally disable feed link.
-2. `rss:  ` use sites' feed link. This is the default option.
-
-    Follow the installation instruction in the plugin's README. After the configuration is done for this plugin, the feed link is ready too.
-
-3. `rss: http://your-feed-url` set specific feed link.
-
-### Up to 5 code highlight themes built-in.
-
-NexT uses [Tomorrow Theme](https://github.com/chriskempson/tomorrow-theme) with 5 themes for you to choose from.
-Next use `normal` by default. Have a preview about `normal` and `night`:
-
-![Tomorrow Normal Preview](http://iissnan.com/nexus/next/tomorrow-normal.png)
-![Tomorrow Night Preview](http://iissnan.com/nexus/next/tomorrow-night.png)
-
-Head over to [Tomorrow Theme](https://github.com/chriskempson/tomorrow-theme) for more details.
-
-## Configuration
-
-NexT comes with few configurations.
-
-```yml
-
-# Menu configuration.
-menu:
-  home: /
-  archives: /archives
-
-# Favicon
-favicon: /favicon.ico
-
-# Avatar (put the image into next/source/images/)
-# can be any image format supported by web browsers (JPEG,PNG,GIF,SVG,..)
-avatar: /default_avatar.png
-
-# Code highlight theme
-# available: normal | night | night eighties | night blue | night bright
-highlight_theme: normal
-
-# Fancybox for image gallery
-fancybox: true
-
-# Specify the date when the site was setup
-since: 2013
-
-```
-
-## Browser support
-
-![browser-image]
-
-[![Browser Stack](.github/browserstack_logo.png)](https://www.browserstack.com/)
->**BrowserStack** is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators.
+And if you see any error message during update (something like **«Commit your changes or stash them before you can merge»**), recommended to learn [Hexo data files][docs-data-files-url] feature.\
+However, you can bypass update errors by using the `Commit`, `Stash` or `Reset` commands for local changes. See [here](https://stackoverflow.com/a/15745424/5861495) how to do it.
+
+**If you want to update from v5.1.x to the latest version, read [this][docs-update-5-1-x-url].**
+
+## Feedback
+
+* Visit the [Awesome NexT][awesome-next-url] list to share plugins and tutorials with other users.
+* Join our [Telegram][t-chat-url] / [Gitter][gitter-url] / [Riot][riot-url] chats.
+* [Add or improve translation][i18n-url] in few seconds.
+* Report a bug in [GitHub Issues][issues-bug-url].
+* Request a new feature on [GitHub][issues-feat-url].
+* Vote for [popular feature requests][feat-req-vote-url].
 
 ## Contributing
 
-Contribution is welcome, feel free to open an issue and fork. Waiting for your pull request.
-<!--
-[![hexo-image]][hexo-url]
-[![bower-image]][bower-url]
-[![jquery-image]][jquery-url]
+We welcome you to join the development of NexT. Please see [contributing document][contributing-document-url]. 🤗
 
-[hexo-image]: http://img.shields.io/badge/Hexo-2.4+-2BAF2B.svg?style=flat-square
-[hexo-url]: http://hexo.io
-[bower-image]: http://img.shields.io/badge/Bower-*-2BAF2B.svg?style=flat-square
-[bower-url]: http://bower.io
-[jquery-image]: https://img.shields.io/badge/jquery-1.9-blue.svg?style=flat-square
-[jquery-url]: http://jquery.com/
--->
+Also, we welcome Issue or PR to our [official-plugins][official-plugins-url].
 
-[browser-image]: https://img.shields.io/badge/browser-%20chrome%20%7C%20firefox%20%7C%20opera%20%7C%20safari%20%7C%20ie%20%3E%3D%209-lightgrey.svg
-[browser-url]: https://www.browserstack.com
+## Contributors
 
-[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
-[gitter-url]: https://gitter.im/iissnan/hexo-theme-next?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+[![][contributors-image]][contributors-url]
 
-[travis-image]: https://travis-ci.org/iissnan/hexo-theme-next.svg?branch=master
-[travis-url]: https://travis-ci.org/iissnan/hexo-theme-next?branch=master "Travis CI"
+## Thanks
 
-[hexo-image]: https://img.shields.io/badge/hexo-%3E%3D%203.0-blue.svg
-[hexo-url]: http://hexo.io
+<p align="center">
+  «NexT» send special thanks to these great services that sponsor our core infrastructure:
+<br>
+<br>
+  <a href="https://github.com"><img align="center" width="100" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png"></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.netlify.com"><img align="center" width="150" src="https://cdn.netlify.com/15ecf59b59c9d04b88097c6b5d2c7e8a7d1302d0/1b6d6/img/press/logos/full-logo-light.svg"></a>
+<br>
+<br>
+  <sub>GitHub allows us to host the Git repository, Netlify allows us to distribute the documentation.</sub>
+<br>
+<br>
+  <a href="https://crowdin.com"><img align="center" width="180" src="https://support.crowdin.com/assets/logos/crowdin-logo1-small.png"></a>
+<br>
+<br>
+  <sub>Crowdin allows us to translate conveniently the documentation.</sub>
+<br>
+<br>
+  <a href="https://codacy.com"><img align="center" width="155" src="https://user-images.githubusercontent.com/16944225/55026017-623f8f00-5002-11e9-88bf-0d6a5884c6c2.png"></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://travis-ci.com"><img align="center" width="140" src="https://raw.githubusercontent.com/travis-ci/travis-web/master/public/images/logos/TravisCI-Full-Color.png"></a>
+<br>
+<br>
+  <sub>Codacy allows us to monitor code quality, Travis CI allows us to run the test suite.</sub>
+</p>
 
-[mnt-image]: https://img.shields.io/maintenance/yes/2017.svg
-[rel-image]: https://img.shields.io/github/release/iissnan/hexo-theme-next.svg
-<!--[lic-image]: https://img.shields.io/npm/l/hexo-theme-next.svg-->
-[lic-image]: https://img.shields.io/dub/l/vibe-d.svg
+[docs-installation-url]: https://github.com/theme-next/hexo-theme-next/blob/master/docs/INSTALLATION.md
+[docs-data-files-url]: https://github.com/theme-next/hexo-theme-next/blob/master/docs/DATA-FILES.md
+[docs-update-5-1-x-url]: https://github.com/theme-next/hexo-theme-next/blob/master/docs/UPDATE-FROM-5.1.X.md
 
-[git-image]: https://img.shields.io/badge/install%20with%20-git-blue.svg
-[curl-tar-image]: https://img.shields.io/badge/install%20with%20-curl%20%7C%20tar-blue.svg
-[curl-tar-wget-image]: https://img.shields.io/badge/install%20with%20-curl%20%7C%20tar%20%7C%20wget-blue.svg
-[git-url]: http://lmgtfy.com/?q=linux+git+install
-[curl-tar-url]: http://lmgtfy.com/?q=linux+curl+tar+install
-[curl-tar-wget-url]: http://lmgtfy.com/?q=linux+curl+tar+wget+install
+[t-news-url]: https://t.me/theme_next_news
+[t-chat-url]: https://t.me/theme_next
+[gitter-url]: https://gitter.im/theme-next
+[riot-url]: https://riot.im/app/#/room/#theme-next:matrix.org
+[i18n-url]: https://i18n.theme-next.org
 
-[download-latest-url]: https://github.com/iissnan/hexo-theme-next/archive/master.zip
-[releases-latest-url]: https://github.com/iissnan/hexo-theme-next/releases/latest
-[releases-url]: https://github.com/iissnan/hexo-theme-next/releases
-[tags-url]: https://github.com/iissnan/hexo-theme-next/tags
-[commits-url]: https://github.com/iissnan/hexo-theme-next/commits/master
+[awesome-next-url]: https://github.com/theme-next/awesome-next
+[issues-bug-url]: https://github.com/theme-next/hexo-theme-next/issues/new?assignees=&labels=Bug&template=bug-report.md
+[issues-feat-url]: https://github.com/theme-next/hexo-theme-next/issues/new?assignees=&labels=Feature+Request&template=feature-request.md
+[feat-req-vote-url]: https://github.com/theme-next/hexo-theme-next/issues?q=is%3Aopen+is%3Aissue+label%3A%22Feature+Request%22
+
+[contributing-document-url]: https://github.com/theme-next/hexo-theme-next/blob/master/.github/CONTRIBUTING.md
+[official-plugins-url]: https://github.com/theme-next
+[contributors-image]: https://opencollective.com/theme-next/contributors.svg?width=890
+[contributors-url]: https://github.com/theme-next/hexo-theme-next/graphs/contributors

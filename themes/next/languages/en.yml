@@ -1,10 +1,10 @@
+name: English
+
 title:
   archive: Archive
   category: Category
   tag: Tag
   schedule: Schedule
-
-author: Author
 
 menu:
   home: Home
@@ -22,33 +22,27 @@ sidebar:
   toc: Table of Contents
 
 post:
-  created: Post created
-  modified: Post modified
-  sticky: Sticky
   posted: Posted on
+  edited: Edited on
+  created: Created
+  modified: Modified
+  edit: Edit this post
   in: In
-  more: more
   read_more: Read more
   untitled: Untitled
-  toc_empty: This post does not have a Table of Contents
-  visitors: Visitors
-  wordcount: Words count in article
-  min2read: Reading time
-  totalcount: Site words total count
+  sticky: Sticky
+  views: Views
+  related_posts: Related Posts
   copyright:
     author: Post author
     link: Post link
     license_title: Copyright Notice
-    license_content: 'All articles in this blog are licensed under
-      <a href="%s" rel="external nofollow" target="_blank">%s</a> unless stating additionally.'
-
-page:
-  totally: Totally
-  tags: tags
+    license_content: "All articles in this blog are licensed under %s unless stating additionally."
 
 footer:
   powered: "Powered by %s"
-  theme: Theme
+  total_views: Total Views
+  total_visitors: Total Visitors
 
 counter:
   tag_cloud:
@@ -68,7 +62,6 @@ counter:
 
 state:
   posts: posts
-  pages: pages
   tags: tags
   categories: categories
 
@@ -86,14 +79,28 @@ cheers:
 keep_on: Keep on posting.
 
 symbol:
-  comma: ', '
-  period: '. '
-  colon: ':'
+  comma: ", "
+  period: ". "
+  colon: ": "
 
 reward:
   donate: Donate
   wechatpay: WeChat Pay
   alipay: Alipay
+  paypal: PayPal
   bitcoin: Bitcoin
 
-gitmentbutton: Show comments from Gitment
+follow_me:
+  welcome: Welcome to my other publishing channels
+
+accessibility:
+  nav_toggle: Toggle navigation bar
+  prev_page: Previous page
+  next_page: Next page
+
+symbols_count_time:
+  count: Symbols count in article
+  count_total: Symbols count total
+  time: Reading time
+  time_total: Reading time total
+  time_minutes: mins.
