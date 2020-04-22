@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="github,webhooks,钩子," />
 
 
 
@@ -86,22 +86,20 @@
 
 
 
-<meta name="description" content="聚焦Go语言与技术原理，帮助Gopher掌握后端核心技术栈，进入大厂不是梦">
-<meta property="og:type" content="website">
-<meta property="og:title" content="平也的技术博客">
-<meta property="og:url" content="https://pingyeaa.com/categories/%E5%9F%BA%E7%A1%80/index.html">
+<meta name="description" content="最近机缘巧合的购置了域名和服务器，不用实在是浪费，再加上一直没有属于自己的个人网站，所以打算用hexo在服务器上玩一下，这样也就不用再纠结用Github pages还是Gitee pages了。当然，今天的主题并不是博客搭建，而是如何利用Github的钩子，将博客代码部署到服务器上。 毕竟Github的钩子已经历史悠久了，网上有很多开源项目可以拿来用，所以我并没有造轮子，而是去找了5K star的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何用Github钩子做自动部署">
+<meta property="og:url" content="https://pingyeaa.com/2020/04/22/other/github-webhooks/index.html">
 <meta property="og:site_name" content="平也的技术博客">
-<meta property="og:description" content="聚焦Go语言与技术原理，帮助Gopher掌握后端核心技术栈，进入大厂不是梦">
+<meta property="og:description" content="最近机缘巧合的购置了域名和服务器，不用实在是浪费，再加上一直没有属于自己的个人网站，所以打算用hexo在服务器上玩一下，这样也就不用再纠结用Github pages还是Gitee pages了。当然，今天的主题并不是博客搭建，而是如何利用Github的钩子，将博客代码部署到服务器上。 毕竟Github的钩子已经历史悠久了，网上有很多开源项目可以拿来用，所以我并没有造轮子，而是去找了5K star的">
+<meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png">
+<meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png">
+<meta property="article:published_time" content="2020-04-22T02:27:34.000Z">
+<meta property="article:modified_time" content="2020-04-22T06:39:03.382Z">
 <meta property="article:author" content="平也">
-<meta property="article:tag" content="Go">
-<meta property="article:tag" content="Golang">
-<meta property="article:tag" content="面试">
-<meta property="article:tag" content="教程">
-<meta property="article:tag" content="技术原理">
-<meta property="article:tag" content="大厂">
-<meta property="article:tag" content="Gohper">
-<meta property="article:tag" content="Go Home">
+<meta property="article:tag" content="github,webhooks,钩子">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png">
 
 
 
@@ -131,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="https://pingyeaa.com/categories/基础/"/>
+  <link rel="canonical" href="https://pingyeaa.com/2020/04/22/other/github-webhooks/"/>
 
 
 
 
 
-  <title>分类: 基础 | 平也的技术博客</title>
+  <title>如何用Github钩子做自动部署 | 平也的技术博客</title>
   
 
 
@@ -166,7 +164,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -314,55 +312,231 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>基础<small>分类</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://pingyeaa.com/2020/04/22/other/github-webhooks/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="平也">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="平也的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/04/21/home/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">如何用Github钩子做自动部署</h2>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-04-21T10:01:52+08:00"
-              content="2020-04-21" >
-          04-21
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-22T10:27:34+08:00">
+                2020-04-22
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index">
+                    <span itemprop="name">杂谈</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/04/22/other/github-webhooks/" class="leancloud_visitors" data-flag-title="如何用Github钩子做自动部署">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近机缘巧合的购置了域名和服务器，不用实在是浪费，再加上一直没有属于自己的个人网站，所以打算用hexo在服务器上玩一下，这样也就不用再纠结用Github pages还是Gitee pages了。当然，今天的主题并不是博客搭建，而是如何利用Github的钩子，将博客代码部署到服务器上。</p>
+<p>毕竟Github的钩子已经历史悠久了，网上有很多开源项目可以拿来用，所以我并没有造轮子，而是去找了5K star的开源Go项目<code>webhook</code>，这个工具的作用是接收Github仓库的变动通知，然后调用你配置好的shell脚本，脚本可以写上代码拉取的命令或是编译的操作等，具体根据个人需求而定。简而言之，它只起着拉通Github与你服务器的作用。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png" alt="file"></p>
+<h3 id="webhook工具安装"><a href="#webhook工具安装" class="headerlink" title="webhook工具安装"></a>webhook工具安装</h3><p>因为webhook是Go语言开发的，所以要先安装Go语言。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y golang</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以用go命令安装webhook了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/adnanh/webhook</span><br></pre></td></tr></table></figure>
+
+<p>命令安装位置可以通过<code>go env</code>查看，GOPATH就是命令安装路径，比如我的命令就安装在/root/go/bin/webhook。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">go env</span><br><span class="line">...</span><br><span class="line">GOOS="linux"</span><br><span class="line">GOPATH="/root/go"</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成ssh-key"><a href="#生成ssh-key" class="headerlink" title="生成ssh key"></a>生成ssh key</h3><p>在编写脚本之前确保服务器有权限拉取github代码，如果已经做了配置可跳过本节去看<a href="#部署脚本编写">部署脚本编写</a>。ssh key是代码托管平台（github、gitee、coding、gitlab等）鉴别你是否有权拉取代码的身份标识，生成只需一行命令和一路回车就行了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa): </span><br><span class="line">Enter passphrase (empty for no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:M6sCf/J/hOu3zLxMkFUVmv3iWIa30CfbxiWqmWCt1YE root@iZwz96y36tk2ecnykzituxZ</span><br><span class="line">The key's randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|            ..o. |</span><br><span class="line">|           . o   |</span><br><span class="line">|          . o    |</span><br><span class="line">|       . o .     |</span><br><span class="line">|      E S.  .    |</span><br><span class="line">|  .  . ..Oo ..   |</span><br><span class="line">|   oo o ==Boo .  |</span><br><span class="line">|   .++.+o#== .   |</span><br><span class="line">|    .=*+=+@o     |</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
+
+<p>生成后可通过<code>cat ~/.ssh/id_rsa.pub</code>命令查看，最后将key加入github即可，加法不再赘述，请自行谷歌。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br><span class="line"></span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQHBAAABAQCv7LGVJUFdcLL+HZyRFTQIQCdre61Gch76lDVpmWSX9BGGRU3iQS7EU5qApFn1VSvt+yf4rMt2LEkuxGCm1wIyBKZ6LYDViZBeTAfx4BcM1mcpxOX6I/+r07mQ4llTz+poQB1Zp9Y60uk0tbGOVWlCoDBEvf9qeEnQ0qEczEkv7wcawV6pVhlXjFKZgq0EOQbCYoWMvPUl+dwDbTcl/h+7At1nlgfF7IuRHlKf18qvgnTRT2wpiuz4pWdoAi8LcY1JiR1z5OB0oCJ2euhyDND39G2NxZRS1FIVdgCEvioHtdoHOSoWBlcSj0fLFSnscBfRBrCd7yhOP7fFKfrowHMj root@iZwz96y36tk2ecnykzituxZ</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署脚本编写"><a href="#部署脚本编写" class="headerlink" title="部署脚本编写"></a>部署脚本编写</h3><p>webhook工具是用来</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png" alt=""></p>
 
       
     </div>
+    
+    
+    
 
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/qrcode.jpg" alt="平也 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>如果觉得文章对你有所帮助，欢迎关注公众号“平也”，持续聚焦Go语言与技术原理。</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="平也 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/github-webhooks-%E9%92%A9%E5%AD%90/" rel="tag"># github,webhooks,钩子</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/21/gpm/" rel="next" title="Golang的GPM模型是什么？">
+                <i class="fa fa-chevron-left"></i> Golang的GPM模型是什么？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -370,6 +544,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -390,8 +568,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -471,6 +658,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook工具安装"><span class="nav-number">1.</span> <span class="nav-text">webhook工具安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成ssh-key"><span class="nav-number">2.</span> <span class="nav-text">生成ssh key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署脚本编写"><span class="nav-number">3.</span> <span class="nav-text">部署脚本编写</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -611,6 +814,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
