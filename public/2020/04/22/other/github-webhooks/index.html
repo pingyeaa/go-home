@@ -94,8 +94,11 @@
 <meta property="og:description" content="最近机缘巧合的购置了域名和服务器，不用实在是浪费，再加上一直没有属于自己的个人网站，所以打算用hexo在服务器上玩一下，这样也就不用再纠结用Github pages还是Gitee pages了。当然，今天的主题并不是博客搭建，而是如何利用Github的钩子，将博客代码部署到服务器上。 毕竟Github的钩子已经历史悠久了，网上有很多开源项目可以拿来用，所以我并没有造轮子，而是去找了5K star的">
 <meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png">
 <meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png">
+<meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541102651.png">
+<meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541394355.png">
+<meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541482026.png">
 <meta property="article:published_time" content="2020-04-22T02:27:34.000Z">
-<meta property="article:modified_time" content="2020-04-22T07:27:36.103Z">
+<meta property="article:modified_time" content="2020-04-22T07:45:07.331Z">
 <meta property="article:author" content="平也">
 <meta property="article:tag" content="github,webhooks,钩子">
 <meta name="twitter:card" content="summary">
@@ -455,12 +458,19 @@
 <li>execute-command：要执行的脚本名，就是刚才编写的部署脚本</li>
 <li>command-working-directory：脚本所在目录</li>
 </ul>
-<p>完成后通过webhook命令启动，<code>-verbose</code>参数可以打印调试日志。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/root/go/bin/webhook -hooks hooks.json -verbose</span><br></pre></td></tr></table></figure>
+<p>完成后通过webhook命令启动，可以看到id为deploy-webhook的配置已经加载了，我们需要注意的是监听的端口和路径，等下要用到。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/root/go/bin/webhook -hooks hooks.json -verbose</span><br><span class="line"></span><br><span class="line">[webhook] 2020/04/22 15:18:22 version 2.6.11 starting</span><br><span class="line">[webhook] 2020/04/22 15:18:22 setting up os signal watcher</span><br><span class="line">[webhook] 2020/04/22 15:18:22 attempting to load hooks from hooks.json</span><br><span class="line">[webhook] 2020/04/22 15:18:22 found 1 hook(s) in file</span><br><span class="line">[webhook] 2020/04/22 15:18:22   loaded: deploy-webhook</span><br><span class="line">[webhook] 2020/04/22 15:18:22 serving hooks on http://0.0.0.0:9000/hooks/&#123;id&#125;</span><br><span class="line">[webhook] 2020/04/22 15:18:22 os signal watcher ready</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://0.0.0.0:9000/hooks/&#123;id&#125;</span><br></pre></td></tr></table></figure>
 
-
+<h3 id="Github-Webhooks配置"><a href="#Github-Webhooks配置" class="headerlink" title="Github Webhooks配置"></a>Github Webhooks配置</h3><p>现在服务器已经启动了webhook程序监听9000端口，接下来仅需要告诉Github这个地址和端口就好了。</p>
+<p>打开仓库设置页，添加webhook。</p>
 <p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png" alt=""></p>
+<p>配置webhooks，Payload URL就是要通知的地址，把刚才打印出的端口和路径填上即可，其他默认。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541102651.png" alt="file"></p>
+<p>现在可以提交代码测试了，如果推送失败Github中会有错误提示，同样的，成功不仅在Github中能看到，服务器的打印日志也有记录。</p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541394355.png" alt="file"></p>
+<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541482026.png" alt="file"></p>
 
       
     </div>
@@ -683,7 +693,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook工具安装"><span class="nav-number">1.</span> <span class="nav-text">webhook工具安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成ssh-key"><span class="nav-number">2.</span> <span class="nav-text">生成ssh key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署脚本编写"><span class="nav-number">3.</span> <span class="nav-text">部署脚本编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook配置与启动"><span class="nav-number">4.</span> <span class="nav-text">webhook配置与启动</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook工具安装"><span class="nav-number">1.</span> <span class="nav-text">webhook工具安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成ssh-key"><span class="nav-number">2.</span> <span class="nav-text">生成ssh key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署脚本编写"><span class="nav-number">3.</span> <span class="nav-text">部署脚本编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook配置与启动"><span class="nav-number">4.</span> <span class="nav-text">webhook配置与启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Github-Webhooks配置"><span class="nav-number">5.</span> <span class="nav-text">Github Webhooks配置</span></a></li></ol></div>
             
 
           </div>

@@ -108,12 +108,38 @@ git pull
 - execute-command：要执行的脚本名，就是刚才编写的部署脚本
 - command-working-directory：脚本所在目录
 
-完成后通过webhook命令启动，`-verbose`参数可以打印调试日志。
+完成后通过webhook命令启动，可以看到id为deploy-webhook的配置已经加载了，我们需要注意的是监听的端口和路径，等下要用到。
 
 ```shell
 /root/go/bin/webhook -hooks hooks.json -verbose
+
+[webhook] 2020/04/22 15:18:22 version 2.6.11 starting
+[webhook] 2020/04/22 15:18:22 setting up os signal watcher
+[webhook] 2020/04/22 15:18:22 attempting to load hooks from hooks.json
+[webhook] 2020/04/22 15:18:22 found 1 hook(s) in file
+[webhook] 2020/04/22 15:18:22   loaded: deploy-webhook
+[webhook] 2020/04/22 15:18:22 serving hooks on http://0.0.0.0:9000/hooks/{id}
+[webhook] 2020/04/22 15:18:22 os signal watcher ready
 ```
 
+```shell
+http://0.0.0.0:9000/hooks/{id}
+```
 
+### Github Webhooks配置
+
+现在服务器已经启动了webhook程序监听9000端口，接下来仅需要告诉Github这个地址和端口就好了。
+
+打开仓库设置页，添加webhook。
 
 ![](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png)
+
+配置webhooks，Payload URL就是要通知的地址，把刚才打印出的端口和路径填上即可，其他默认。
+
+![file](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541102651.png)
+
+现在可以提交代码测试了，如果推送失败Github中会有错误提示，同样的，成功不仅在Github中能看到，服务器的打印日志也有记录。
+
+![file](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541394355.png)
+
+![file](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541482026.png)
