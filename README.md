@@ -60,6 +60,7 @@
 #### 数据库
 
 - [你知道MySQL复制机制原理吗？](https://mp.weixin.qq.com/s/Rx-Qwod35I8bh3iFUfEfAw)
+- [MySQL的事务隔离级别是什么？](https://juejin.im/post/5e9d5a4ef265da48057c6c39)
 - 索引一般是这样实现的
 - 万年面试题--常见MySQL引擎及区别
 - 你知道如何分库分表才正确吗

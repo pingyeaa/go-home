@@ -2,8 +2,12 @@
 
 title: 如何用Github钩子做自动部署
 date: 2020-04-22 10:27:34
-tags: github,webhooks,钩子
-categories: 杂谈
+tags: 
+- github
+- webhooks
+- 钩子
+categories: 
+- 杂谈
 ---
 
 最近机缘巧合的购置了域名和服务器，不用实在是浪费，再加上一直没有属于自己的个人网站，所以打算用hexo在服务器上玩一下，这样也就不用再纠结用Github pages还是Gitee pages了。当然，今天的主题并不是博客搭建，而是如何利用Github的钩子，将博客代码部署到服务器上。
