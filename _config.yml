@@ -99,6 +99,6 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://gitee.com/pingyeaa/pingyeaa.git
+  repo: https://github.com/pingyeaa/go-home.git
   branch: master
 
