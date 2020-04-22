@@ -75,6 +75,45 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQHBAAABAQCv7LGVJUFdcLL+HZyRFTQIQCdre61Gch76lDVpmWSX
 
 ### 部署脚本编写
 
-webhook工具是用来
+该shell脚本的主要目的是从github拉取代码，脚本内容很简单，只做了目录的简要判断，代码目录存在则更新，不存在则克隆仓库，工作目录和仓库名称、地址请换成自己的。
+
+```shell
+#!/bin/bash
+
+cd /home/www/website
+
+if [ ! -d "go-home" ]; then
+  git clone https://github.com/pingyeaa/go-home.git
+fi
+
+cd go-home
+git pull
+```
+
+### webhook配置与启动
+
+编写配置文件hooks.json，格式如下。
+
+```json
+[
+  {
+    "id": "deploy-webhook",
+    "execute-command": "deploy.sh",
+    "command-working-directory": "/home"
+  }
+]
+```
+
+- id：钩子的id，可自定义
+- execute-command：要执行的脚本名，就是刚才编写的部署脚本
+- command-working-directory：脚本所在目录
+
+完成后通过webhook命令启动，`-verbose`参数可以打印调试日志。
+
+```shell
+/root/go/bin/webhook -hooks hooks.json -verbose
+```
+
+
 
 ![](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png)

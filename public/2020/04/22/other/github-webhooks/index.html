@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png">
 <meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png">
 <meta property="article:published_time" content="2020-04-22T02:27:34.000Z">
-<meta property="article:modified_time" content="2020-04-22T06:39:03.382Z">
+<meta property="article:modified_time" content="2020-04-22T07:27:36.103Z">
 <meta property="article:author" content="平也">
 <meta property="article:tag" content="github,webhooks,钩子">
 <meta name="twitter:card" content="summary">
@@ -444,7 +444,22 @@
 <p>生成后可通过<code>cat ~/.ssh/id_rsa.pub</code>命令查看，最后将key加入github即可，加法不再赘述，请自行谷歌。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br><span class="line"></span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQHBAAABAQCv7LGVJUFdcLL+HZyRFTQIQCdre61Gch76lDVpmWSX9BGGRU3iQS7EU5qApFn1VSvt+yf4rMt2LEkuxGCm1wIyBKZ6LYDViZBeTAfx4BcM1mcpxOX6I/+r07mQ4llTz+poQB1Zp9Y60uk0tbGOVWlCoDBEvf9qeEnQ0qEczEkv7wcawV6pVhlXjFKZgq0EOQbCYoWMvPUl+dwDbTcl/h+7At1nlgfF7IuRHlKf18qvgnTRT2wpiuz4pWdoAi8LcY1JiR1z5OB0oCJ2euhyDND39G2NxZRS1FIVdgCEvioHtdoHOSoWBlcSj0fLFSnscBfRBrCd7yhOP7fFKfrowHMj root@iZwz96y36tk2ecnykzituxZ</span><br></pre></td></tr></table></figure>
 
-<h3 id="部署脚本编写"><a href="#部署脚本编写" class="headerlink" title="部署脚本编写"></a>部署脚本编写</h3><p>webhook工具是用来</p>
+<h3 id="部署脚本编写"><a href="#部署脚本编写" class="headerlink" title="部署脚本编写"></a>部署脚本编写</h3><p>该shell脚本的主要目的是从github拉取代码，脚本内容很简单，只做了目录的简要判断，代码目录存在则更新，不存在则克隆仓库，工作目录和仓库名称、地址请换成自己的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cd /home/www/website</span><br><span class="line"></span><br><span class="line">if [ ! -d "go-home" ]; then</span><br><span class="line">  git clone https://github.com/pingyeaa/go-home.git</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">cd go-home</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+<h3 id="webhook配置与启动"><a href="#webhook配置与启动" class="headerlink" title="webhook配置与启动"></a>webhook配置与启动</h3><p>编写配置文件hooks.json，格式如下。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"deploy-webhook"</span>,</span><br><span class="line">    <span class="attr">"execute-command"</span>: <span class="string">"deploy.sh"</span>,</span><br><span class="line">    <span class="attr">"command-working-directory"</span>: <span class="string">"/home"</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>id：钩子的id，可自定义</li>
+<li>execute-command：要执行的脚本名，就是刚才编写的部署脚本</li>
+<li>command-working-directory：脚本所在目录</li>
+</ul>
+<p>完成后通过webhook命令启动，<code>-verbose</code>参数可以打印调试日志。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/root/go/bin/webhook -hooks hooks.json -verbose</span><br></pre></td></tr></table></figure>
+
+
+
 <p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png" alt=""></p>
 
       
@@ -668,7 +683,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook工具安装"><span class="nav-number">1.</span> <span class="nav-text">webhook工具安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成ssh-key"><span class="nav-number">2.</span> <span class="nav-text">生成ssh key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署脚本编写"><span class="nav-number">3.</span> <span class="nav-text">部署脚本编写</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook工具安装"><span class="nav-number">1.</span> <span class="nav-text">webhook工具安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成ssh-key"><span class="nav-number">2.</span> <span class="nav-text">生成ssh key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署脚本编写"><span class="nav-number">3.</span> <span class="nav-text">部署脚本编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook配置与启动"><span class="nav-number">4.</span> <span class="nav-text">webhook配置与启动</span></a></li></ol></div>
             
 
           </div>
