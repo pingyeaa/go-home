@@ -1,7 +1,11 @@
 ---
 title: Golang的GPM模型是什么？
 date: 2020-04-21 19:19:34
-tags: golang, gpm
+tags: 
+- golang
+- gpm
+- 调度器
+
 ---
 
 > 😋我是平也，这有一个专注Gopher技术成长的开源项目[「go home」](https://github.com/pingyeaa/go-home)

@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="golang, gpm," />
+  <meta name="keywords" content="golang,gpm,调度器," />
 
 
 
@@ -89,7 +89,7 @@
 <meta name="description" content="😋我是平也，这有一个专注Gopher技术成长的开源项目「go home」  导读相信很多人都听说过Go语言天然支持高并发，原因是内部有协程（goroutine）加持，可以在一个进程中启动成千上万个协程。那么，它凭什么做到如此高的并发呢？那就需要先了解什么是并发模型。  并发模型著名的C++专家Herb Sutter曾经说过“免费的午餐已经终结”。为了让代码运行的更快，单纯依靠更快的硬件已经无法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Golang的GPM模型是什么？">
-<meta property="og:url" content="https://pingyeaa.com/2020/04/21/gpm/index.html">
+<meta property="og:url" content="https://pingyeaa.com/2020/04/21/golang/gpm/index.html">
 <meta property="og:site_name" content="平也的技术博客">
 <meta property="og:description" content="😋我是平也，这有一个专注Gopher技术成长的开源项目「go home」  导读相信很多人都听说过Go语言天然支持高并发，原因是内部有协程（goroutine）加持，可以在一个进程中启动成千上万个协程。那么，它凭什么做到如此高的并发呢？那就需要先了解什么是并发模型。  并发模型著名的C++专家Herb Sutter曾经说过“免费的午餐已经终结”。为了让代码运行的更快，单纯依靠更快的硬件已经无法">
 <meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1586933074098.png">
@@ -110,9 +110,11 @@
 <meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587124627966.png">
 <meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1586934654476.png">
 <meta property="article:published_time" content="2020-04-21T11:19:34.000Z">
-<meta property="article:modified_time" content="2020-04-21T11:20:54.156Z">
+<meta property="article:modified_time" content="2020-04-22T08:34:14.456Z">
 <meta property="article:author" content="平也">
-<meta property="article:tag" content="golang, gpm">
+<meta property="article:tag" content="golang">
+<meta property="article:tag" content="gpm">
+<meta property="article:tag" content="调度器">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1586933074098.png">
 
@@ -124,7 +126,7 @@
     root: '/',
     scheme: 'Pisces',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":true},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -144,7 +146,7 @@
 
 
 
-  <link rel="canonical" href="https://pingyeaa.com/2020/04/21/gpm/"/>
+  <link rel="canonical" href="https://pingyeaa.com/2020/04/21/golang/gpm/"/>
 
 
 
@@ -331,7 +333,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://pingyeaa.com/2020/04/21/gpm/">
+    <link itemprop="mainEntityOfPage" href="https://pingyeaa.com/2020/04/21/golang/gpm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="平也">
@@ -378,7 +380,7 @@
 
           
           
-             <span id="/2020/04/21/gpm/" class="leancloud_visitors" data-flag-title="Golang的GPM模型是什么？">
+             <span id="/2020/04/21/golang/gpm/" class="leancloud_visitors" data-flag-title="Golang的GPM模型是什么？">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -392,6 +394,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
           
 
           
@@ -541,7 +574,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/golang-gpm/" rel="tag"># golang, gpm</a>
+            <a href="/tags/golang/" rel="tag"># golang</a>
+          
+            <a href="/tags/gpm/" rel="tag"># gpm</a>
+          
+            <a href="/tags/%E8%B0%83%E5%BA%A6%E5%99%A8/" rel="tag"># 调度器</a>
           
         </div>
       
@@ -667,7 +704,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -725,6 +762,13 @@
       
 
       
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
 
     </div>
   </aside>
@@ -743,14 +787,19 @@
   <span class="author" itemprop="copyrightHolder">平也</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-
-
-  <span class="post-meta-divider">|</span>
 
 
 
@@ -771,13 +820,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
     
 
     
