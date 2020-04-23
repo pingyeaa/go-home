@@ -122,6 +122,7 @@ menu:
   categories: /categories/ || fa fa-th
   archives: /archives/ || fa fa-archive
   #schedule: /schedule/ || fa fa-calendar
+  留言板: /comments || fas fa-comments
   sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
 

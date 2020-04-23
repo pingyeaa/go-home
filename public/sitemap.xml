@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://120.76.128.139/comments/index.html</loc>
+    
+    <lastmod>2020-04-23T03:15:57.400Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://120.76.128.139/2020/04/22/other/github-webhooks/</loc>
     
     <lastmod>2020-04-22T12:22:51.741Z</lastmod>
