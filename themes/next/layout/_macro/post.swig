@@ -203,6 +203,7 @@
           {{ post.content }}
         {%- endif %}
       {% else %}
+
         {{ post.content }}
       {%- endif %}
     </div>
