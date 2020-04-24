@@ -206,6 +206,9 @@
 
         {{ post.content }}
       {%- endif %}
+
+      <img src="/images/qrcode.png"></img>
+
     </div>
 
     {#####################}
