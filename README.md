@@ -22,6 +22,7 @@
     * [语言基础](#语言基础)
     * [WEB框架](#WEB框架)
     * [语言库](#语言库)
+  * [工具](#工具)
   * [分布式](#分布式)
   * [数据库](#数据库)
   * [NoSQL](#nosql)
@@ -53,7 +54,7 @@
 	- [Go语言库系列之aurora](https://mp.weixin.qq.com/s/eVmTAnNf3H-jvVR2v2BVYw)
 	- [Go语言库系列之email](https://mp.weixin.qq.com/s/MnwmRPG-R6corxNYvlZ4Yw)
 
-### 工具
+#### 工具
 
 - [进程管理工具 Supervisor](https://mp.weixin.qq.com/s/Bf2WHRunl9VRV7oNlqHhzw)
 
