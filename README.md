@@ -53,6 +53,10 @@
 	- [Go语言库系列之aurora](https://mp.weixin.qq.com/s/eVmTAnNf3H-jvVR2v2BVYw)
 	- [Go语言库系列之email](https://mp.weixin.qq.com/s/MnwmRPG-R6corxNYvlZ4Yw)
 
+### 工具
+
+- [进程管理工具 Supervisor](https://mp.weixin.qq.com/s/Bf2WHRunl9VRV7oNlqHhzw)
+
 #### 分布式
 
 - [你知道链路追踪的实现原理吗？](https://mp.weixin.qq.com/s/AmBawNPQBJ7CF4xWxb_9Yg)

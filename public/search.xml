@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>Go 语言算法题 46 全排列</title>
+      <link href="/2020/04/25/algorithm/permutations/"/>
+      <url>/2020/04/25/algorithm/permutations/</url>
+      
+        <content type="html"><![CDATA[<p>给定一个 <strong>没有重复</strong> 数字的序列，返回其所有可能的全排列。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,2,3]</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [1,3,2],</span><br><span class="line">  [2,1,3],</span><br><span class="line">  [2,3,1],</span><br><span class="line">  [3,1,2],</span><br><span class="line">  [3,2,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> 全排列 </tag>
+            
+            <tag> permutations </tag>
+            
+            <tag> 力扣 </tag>
+            
+            <tag> leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>进程管理工具 Supervisor</title>
       <link href="/2020/04/23/os/supervisor/"/>
       <url>/2020/04/23/os/supervisor/</url>
