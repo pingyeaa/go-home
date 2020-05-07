@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://pingyeaa.com/2020/04/22/other/github-webhooks/</loc>
+    <lastmod>2020-05-07</lastmod>
+  </url>  <url>
     <loc>https://pingyeaa.com/2020/04/27/database/mysql-performance/</loc>
     <lastmod>2020-04-30</lastmod>
   </url>  <url>
     <loc>https://pingyeaa.com/2020/04/23/os/supervisor/</loc>
     <lastmod>2020-04-24</lastmod>
-  </url>  <url>
-    <loc>https://pingyeaa.com/2020/04/22/other/github-webhooks/</loc>
-    <lastmod>2020-04-22</lastmod>
   </url>
 </urlset>

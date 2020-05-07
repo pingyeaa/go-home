@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://pingyeaa.com/2020/04/22/other/github-webhooks/</loc>
+    
+    <lastmod>2020-05-07T16:16:52.737Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://pingyeaa.com/2020/04/27/database/mysql-performance/</loc>
     
     <lastmod>2020-04-30T02:07:28.472Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://pingyeaa.com/comments/index.html</loc>
     
     <lastmod>2020-04-23T03:15:57.400Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://pingyeaa.com/2020/04/22/other/github-webhooks/</loc>
-    
-    <lastmod>2020-04-22T12:22:51.741Z</lastmod>
     
   </url>
   

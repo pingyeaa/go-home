@@ -13,7 +13,7 @@ categories:
 
 毕竟Github的钩子已经历史悠久了，网上有很多开源项目可以拿来用，所以我并没有造轮子，而是去找了5K star的开源Go项目`webhook`，这个工具的作用是接收Github仓库的变动通知，然后调用你配置好的shell脚本，脚本可以写上代码拉取的命令或是编译的操作等，具体根据个人需求而定。简而言之，它只起着拉通Github与你服务器的作用。
 
-![file](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png)
+![file](https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png)
 
 ### webhook工具安装
 
@@ -135,14 +135,14 @@ http://0.0.0.0:9000/hooks/{id}
 
 打开仓库设置页，添加webhook。
 
-![](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png)
+![](https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png)
 
 配置webhooks，Payload URL就是要通知的地址，把刚才打印出的端口和路径填上即可，其他默认。
 
-![file](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541102651.png)
+![file](https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541102651.png)
 
 现在可以提交代码测试了，如果推送失败Github中会有错误提示，同样的，成功不仅在Github中能看到，服务器的打印日志也有记录。
 
-![file](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541394355.png)
+![file](https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541394355.png)
 
-![file](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541482026.png)
+![file](https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541482026.png)
