@@ -485,10 +485,10 @@
 <p>要想在终端后台常驻进程，首先想到的是在命令后加 &amp; 符号，来达到隐藏程序在后台的目的，尽管看起来进程已经在后台运行了，实际上终端会话关闭时进程还是会被 kill 掉，这种问题一般是采用搭配 nohup 命令来解决的，nohup 作用是忽略 SIGHUP 信号，而会话关闭时正好发送了该信号给会话内所有运行程序，简而言之，nohup 命令搭配 &amp; 不仅可以在后台运行，还不受会话关闭的影响。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nohup /bin/cat &amp;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587648951163.png" alt="file"></p>
+<p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587648951163.png" alt="file"></p>
 <p>那么问题来了，虽然做到了后台运行，也避免了挂断操作带来的影响，但是它避免不了常驻进程自己出现问题，一旦它因自身异常终止了进程，这对黄金搭档就无力回天了。那怎么才能把挂了的常驻进程拉起来呢？这就是我们要讲的主题 Supervisor。</p>
 <h3 id="Supervisor-介绍"><a href="#Supervisor-介绍" class="headerlink" title="Supervisor 介绍"></a>Supervisor 介绍</h3><p>Supervisor 是专门用来在<a href="#unix">类 Unix</a> 系统上监控管理进程的工具，发布于 2004 年，虽然名字气势磅礴，但它的志向并不是统筹整个操作系统的进程，而是致力于做一个听话的贴身助理，你只需要告诉它要管理的程序，它就按你的要求监控进程，救死扶伤，保证进程的持续运行。</p>
-<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587649424854.png" alt="file"></p>
+<p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587649424854.png" alt="file"></p>
 <p><span id="unix"></span></p>
 <blockquote>
 <p>类 Unix 系统就是由 Unix 设计风格演变出的操作系统，除了 Windows 市面上绝大多数系统都是类 Unix 系统。</p>
@@ -570,7 +570,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> supervisorctl reload</span></span><br></pre></td></tr></table></figure>
 
 <p>访问 <a href="http://localhost:9001" target="_blank" rel="noopener">http://localhost:9001</a> 可以看到 supervisor 的操作界面。</p>
-<p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587696070630.png" alt="file"></p>
+<p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587696070630.png" alt="file"></p>
 <p>今天文章就到这里，想要了解更多，欢迎查看<a href="http://supervisord.org/" target="_blank" rel="noopener">官方文档</a>。</p>
 
       

@@ -17,7 +17,7 @@ tags:
 $ nohup /bin/cat &
 ```
 
-![file](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587648951163.png)
+![file](https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587648951163.png)
 
 那么问题来了，虽然做到了后台运行，也避免了挂断操作带来的影响，但是它避免不了常驻进程自己出现问题，一旦它因自身异常终止了进程，这对黄金搭档就无力回天了。那怎么才能把挂了的常驻进程拉起来呢？这就是我们要讲的主题 Supervisor。
 
@@ -25,7 +25,7 @@ $ nohup /bin/cat &
 
 Supervisor 是专门用来在[类 Unix](#unix) 系统上监控管理进程的工具，发布于 2004 年，虽然名字气势磅礴，但它的志向并不是统筹整个操作系统的进程，而是致力于做一个听话的贴身助理，你只需要告诉它要管理的程序，它就按你的要求监控进程，救死扶伤，保证进程的持续运行。
 
-![file](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587649424854.png)
+![file](https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587649424854.png)
 
 <span id="unix"></span>
 
@@ -206,6 +206,6 @@ $ supervisorctl reload
 
 访问 http://localhost:9001 可以看到 supervisor 的操作界面。
 
-![file](http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587696070630.png)
+![file](https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587696070630.png)
 
 今天文章就到这里，想要了解更多，欢迎查看[官方文档](http://supervisord.org/)。
