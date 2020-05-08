@@ -138,17 +138,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">3</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">2</span></a>
 
   </li>
         <li class="menu-item menu-item-留言板">
@@ -214,194 +214,6 @@
 
           <div class="content index posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pingyeaa.com/2020/04/27/database/mysql-performance/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="平也">
-      <meta itemprop="description" content="穷不失志，富不癫狂">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="平也">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/27/database/mysql-performance/" class="post-title-link" itemprop="url">如何进行 MySQL 性能调优</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-27 10:06:14" itemprop="dateCreated datePublished" datetime="2020-04-27T10:06:14+08:00">2020-04-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>众所周知，Web API 响应慢可能包含很多方面的原因，比如第三方接口超时、DNS 解析慢、API 响应内容过大、网络带宽不够、硬件配置不足、网关层出现问题等，当然最常见且容易出问题的地方当属数据库层的使用，所以我们今天的主题只围绕数据库性能调优来展开。</p>
-<h2 id="show-status"><a href="#show-status" class="headerlink" title="show status"></a>show status</h2><p>当没有精确到具体 SQL 语句，而是觉得系统整体缓慢时，除了使用 vmstat 或 iostat 查看 CPU、进程、I/O 设备的使用情况外，还可以通过 show status 命令查询 mysql 整体执行频率。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; show status;</span><br></pre></td></tr></table></figure>
-
-<p>进入 mysql 终端输入 show status 指令可以看到很多选项，比如语句的执行次数、连接数、锁表次数以及慢查询次数等等，但是我相信你想看的更多的是从上次 mysql 启动到现在的执行频率，所以只需要加上 global 就可以了，它会查询自服务启动后的统计结果，若不加，默认执行的是 show session status，意味着只查询本次连接内的统计结果，说实话我并没有想到它的应用场景，了解真相的同学可以留言给我。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; show global status;</span><br></pre></td></tr></table></figure>
-
-<p>常见的变量有</p>
-<ul>
-<li>Com_select：执行 Select 操作的次数</li>
-<li>Com_update：执行 Update 操作的次数</li>
-<li>Com_insert：执行 Insert 操作的次数</li>
-<li>Com_delete: 执行 Delete 操作的次数</li>
-<li>Com_rollback：回滚次数</li>
-<li>Com_commit：提交次数</li>
-<li>Com_*：Com 开头的都是数据库相关操作的次数</li>
-<li>Innodb_row_lock_time：行锁定花费的总时间，单位毫秒</li>
-<li>Innodb_row_lock_time_avg：行锁定平均花费时间，单位毫秒</li>
-<li>Max_used_connections：服务器启动后使用的最大连接数量</li>
-<li>Uptime：服务器运行时间，单位秒</li>
-<li>Threads_connected：当前打开的连接数量</li>
-<li>Connections：试图连接 MySQL 服务器的数量，无论成功与否</li>
-<li>Aborted_connects：试图连接到服务器但失败的数量</li>
-</ul>
-<p>从 show status 能看出什么问题呢，这个仁者见仁智者见智了，比如回滚次数 Com_rollback 非常多，那意味着代码一定存在问题，连接失败次数 Aborted_connects 过多可能是因为代码中没有及时或正确的关闭 mysql 连接等。</p>
-<h2 id="慢查询"><a href="#慢查询" class="headerlink" title="慢查询"></a>慢查询</h2><p>show status 虽然可以查询系统整体的运行概况，但是无法精准定位到具体的 SQL 语句，哪个语句执行慢实际上是记录在 mysql 中的，当然它也有自己的开关，可以通过 show varirables 命令查看。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; show variables like '%slow_query_log%';</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+---------------------+--------------------------------------+</span><br><span class="line">| Variable_name       | Value                                |</span><br><span class="line">+---------------------+--------------------------------------+</span><br><span class="line">| slow_query_log      | OFF                                  |</span><br><span class="line">| slow_query_log_file | /var/lib/mysql/400d5ed8dd00-slow.log |</span><br><span class="line">+---------------------+--------------------------------------+</span><br><span class="line">2 rows in set (0.06 sec)</span><br></pre></td></tr></table></figure>
-
-<p>slow_query_log 意为开关，slow_query_log_file 是慢查询所在路径，开关可以通过 set 命令控制，但是只针对当前数据库生效，MySQL 重启会失效，如果要永久生效，必须修改 mysql 的配置文件。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; set global slow_query_log=1;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> /etc/mysql/mysql.conf.d/mysqld.cnf</span></span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">......</span><br><span class="line">slow_query_log=1</span><br><span class="line">slow_query_log_file=/tmp/slow.log</span><br><span class="line">long_query_time=1</span><br></pre></td></tr></table></figure>
-
-<p>定义“慢”的权利是掌握在用户手里的，可以通过 long_query_time 设置几秒以上才算慢，慢查询文件格式如下。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Time: 2020-04-28T07:33:20.364348Z</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> User@Host: root[root] @  [172.17.0.1]  Id:     2</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Query_time: 1.848906  Lock_time: 0.000206 Rows_sent: 0  Rows_examined: 2219780</span></span><br><span class="line">use gorm;</span><br><span class="line">SET timestamp=1588059200;</span><br><span class="line">select * from vote_record where create_time like '%abc%';</span><br></pre></td></tr></table></figure>
-
-<p>mysql 会将所有执行超过 long_query_time 的语句记录下来，除此之外还包括时间戳、连接信息、执行时间等。</p>
-<h2 id="show-processlist"><a href="#show-processlist" class="headerlink" title="show processlist"></a>show processlist</h2><p>慢查询已经满足了绝大部分需求，但是只有在执行完毕的语句才会被记录，正在执行中的语句可以通过 show processlist 查看，我们执行 select sleep(5) 来做个测试。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; select sleep(5);</span><br><span class="line">mysql &gt; show processlist;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+----+------+------------------+------+---------+------+------------+------------------------------------------------------------------------------------------------------+</span><br><span class="line">| Id | User | Host             | db   | Command | Time | State      | Info                                                                                                 |</span><br><span class="line">+----+------+------------------+------+---------+------+------------+------------------------------------------------------------------------------------------------------+</span><br><span class="line">|  2 | root | 172.17.0.1:53890 | gorm | Sleep   |   84 |            | NULL                                                                                                 |</span><br><span class="line">|  3 | root | 172.17.0.1:53892 | gorm | Query   |    2 | User sleep | select SLEEP(5)                                                                                      |</span><br><span class="line">|  4 | root | 172.17.0.1:53894 | gorm | Sleep   |  106 |            | NULL                                                                                                 |</span><br><span class="line">|  5 | root | 172.17.0.1:53896 | NULL | Sleep   |  106 |            | NULL                                                                                                 |</span><br><span class="line">|  6 | root | localhost        | NULL | Query   |    0 | starting   | show processlist                                                                                     |</span><br><span class="line">+----+------+------------------+------+---------+------+------------+------------------------------------------------------------------------------------------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<p>show processlist 可以展示出正在运行的线程，除了 root 用户可以看到所有的线程外，其他用户只能看到自己执行的线程，字段解释如下。</p>
-<ul>
-<li>Id：线程的唯一标识</li>
-<li>User：启动该线程的用户</li>
-<li>Host：发出执行请求的客户端 IP 和端口号</li>
-<li>db：在哪个数据库中执行的</li>
-<li>Command：线程正在执行的命令，下文解释</li>
-<li>Time：在当前状态待了多久时间</li>
-<li>State：线程状态</li>
-<li>Info：线程执行的语句，默认显示前 100 个字符，查看全部字符执行 show full processlist</li>
-</ul>
-<p>Command 字段包含如下命令（部分展示）</p>
-<ul>
-<li>Query：正在执行一个语句</li>
-<li>Quit：该线程正在推出</li>
-<li>Shutdown：正在关闭服务器</li>
-<li>Sleep：正在等待客户端发送请求语句</li>
-<li>Debug：线程正在生成调试信息</li>
-<li>Binlog Dump：正在将二进制日志同步到从节点</li>
-<li>……</li>
-</ul>
-<h2 id="执行计划-explain"><a href="#执行计划-explain" class="headerlink" title="执行计划 explain"></a>执行计划 explain</h2><p>当定位到慢语句后，接下来需要分析语句，我们常用 explain 对语句分析，只需在语句前加上 explain 即可。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; explain select * from vote_record where create_time like '%ssssss%';</span><br></pre></td></tr></table></figure>
-
-<p>explain 会大致评估语句的执行情况，有没有用到索引、查询了多少行等，字段如下。</p>
-<ul>
-<li>id：执行编号，在没有子查询的情况下默认为 1 </li>
-<li>select_type：查询类型，常见的有 SIMPLE、PRIMARY、UNION、SUBQUERY等</li>
-<li>table：表示正在访问哪个表</li>
-<li>type：表示访问类型，决定通过什么方式访问表，下文详解</li>
-<li>possible_keys：可能使用到的索引</li>
-<li>key：表示实际采用的哪个索引</li>
-<li>key_len：索引里使用的字节数</li>
-<li>ref：哪些列或常量被用于查找索引列上的值</li>
-<li>rows：估算出所要检索的行数</li>
-<li>extra：执行情况的说明描述，包含了不适合在其它列显示，但是又很重要的信息</li>
-</ul>
-<h3 id="type"><a href="#type" class="headerlink" title="type"></a>type</h3><p>不同的访问类型对应性能不一，常见的访问类型有，性能由低到高排序</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALL、index、range、ref、eq_ref、const、system、NULL</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>ALL：代表扫完全表所有数据才找到目标，性能肯定是最差的</li>
-<li>index：表示查完了所有的索引才找到目标，因为索引文件肯定比全表数据小，所以速度会快一些</li>
-<li>range：表示索引范围扫描，没有扫全部的索引，而是扫了一部分，自然比 index 性能好</li>
-<li>ref：表示使用了非唯一索引精确匹配到了某一行，这个比 range 更精准</li>
-<li>eq_ref：表示使用了唯一索引精准匹配到了某一行，唯一索引自然比非唯一要找得更快</li>
-<li>const/system：表示单表里最多一行匹配查询条件，比如对主键的查询</li>
-<li>NULL：表示不用访问表或索引就能取到数据</li>
-</ul>
-<h2 id="show-profiles"><a href="#show-profiles" class="headerlink" title="show profiles"></a>show profiles</h2><p>除了分析语句索引使用情况外，profile 可以清楚地让我们了解语句执行的过程。监测 profile 开关的语句是</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select @@profiling;</span></span><br><span class="line">+-------------+</span><br><span class="line">| @@profiling |</span><br><span class="line">+-------------+</span><br><span class="line">|           0 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure>
-
-<p>可以通过 set 临时打开开关</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; set profiling=1;</span><br></pre></td></tr></table></figure>
-
-<p>打开收随便执行一条语句</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; select * from vote_record limit 100;</span><br></pre></td></tr></table></figure>
-
-<p>再通过 show profiles 就可以看到刚才执行的记录。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show profiles;</span></span><br><span class="line">+----------+------------+-------------------------------------+</span><br><span class="line">| Query_ID | Duration   | Query                               |</span><br><span class="line">+----------+------------+-------------------------------------+</span><br><span class="line">|        1 | 0.00086200 | select * from vote_record limit 100 |</span><br><span class="line">+----------+------------+-------------------------------------+</span><br><span class="line">1 row in set, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<p>一共三列，分别代表执行的标识、执行时间、执行语句，除此之外还可以指定查询某个 ID 的详情。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show profile <span class="keyword">for</span> query 1;</span></span><br><span class="line">+----------------------+----------+</span><br><span class="line">| Status               | Duration |</span><br><span class="line">+----------------------+----------+</span><br><span class="line">| starting             | 0.000076 |</span><br><span class="line">| checking permissions | 0.000021 |</span><br><span class="line">| Opening tables       | 0.000067 |</span><br><span class="line">| init                 | 0.000023 |</span><br><span class="line">| System lock          | 0.000020 |</span><br><span class="line">| optimizing           | 0.000014 |</span><br><span class="line">| statistics           | 0.000026 |</span><br><span class="line">| preparing            | 0.000021 |</span><br><span class="line">| executing            | 0.000013 |</span><br><span class="line">| Sending data         | 0.000340 |</span><br><span class="line">| end                  | 0.000049 |</span><br><span class="line">| query end            | 0.000038 |</span><br><span class="line">| closing tables       | 0.000023 |</span><br><span class="line">| freeing items        | 0.000060 |</span><br><span class="line">| cleaning up          | 0.000072 |</span><br><span class="line">+----------------------+----------+</span><br><span class="line">15 rows in set, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<p>可以清晰地看出每个阶段执行耗时，实际并不止可以看阶段耗时，还能展示 CPU、IO、内存等信息，感兴趣可以自行尝试。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show profile cpu, block io, memory <span class="keyword">for</span> query 1;</span></span><br><span class="line">+----------------------+----------+----------+------------+--------------+---------------+</span><br><span class="line">| Status               | Duration | CPU_user | CPU_system | Block_ops_in | Block_ops_out |</span><br><span class="line">+----------------------+----------+----------+------------+--------------+---------------+</span><br><span class="line">| starting             | 0.000076 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| checking permissions | 0.000021 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| Opening tables       | 0.000067 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| init                 | 0.000023 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| System lock          | 0.000020 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| optimizing           | 0.000014 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| statistics           | 0.000026 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| preparing            | 0.000021 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| executing            | 0.000013 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| Sending data         | 0.000340 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| end                  | 0.000049 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| query end            | 0.000038 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| closing tables       | 0.000023 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| freeing items        | 0.000060 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">| cleaning up          | 0.000072 | 0.000000 |   0.000000 |            0 |             0 |</span><br><span class="line">+----------------------+----------+----------+------------+--------------+---------------+</span><br><span class="line">15 rows in set, 1 warning (0.01 sec)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-      
-
-      <img src="/images/qrcode.png"></img>
-
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
       
   
   
@@ -743,20 +555,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
