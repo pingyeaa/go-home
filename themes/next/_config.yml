@@ -638,7 +638,7 @@ livere_uid: # <your_uid>
 gitalk:
   enable: true
   github_id: pingyeaa
-  repo: https://github.com/pingyeaa/blog-talk.git
+  repo: blog-talk
   client_id: af91c50cec250bf0d9d9
   client_secret: 7d1fa1e2931a2dfce9b4a12ab9003f7b3f0b6056
   admin_user: pingyeaa
