@@ -613,7 +613,7 @@ changyan:
 # Valine
 # For more information: https://valine.js.org, https://github.com/xCss/Valine
 valine:
-  enable: true
+  enable: false
   appid: EnN1SqI0wowzmH5RgL6wyRln-gzGzoHsz
   appkey: TPxMO4X4Y6SjUYolSXdlWjs7
   notify: true # Mail notifier
@@ -636,17 +636,17 @@ livere_uid: # <your_uid>
 # Gitalk
 # For more information: https://gitalk.github.io, https://github.com/gitalk/gitalk
 gitalk:
-  enable: false
-  github_id: # GitHub repo owner
-  repo: # Repository name to store issues
-  client_id: # GitHub Application Client ID
-  client_secret: # GitHub Application Client Secret
-  admin_user: # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
+  enable: true
+  github_id: pingyeaa
+  repo: https://github.com/pingyeaa/blog-talk.git
+  client_id: af91c50cec250bf0d9d9
+  client_secret: 7d1fa1e2931a2dfce9b4a12ab9003f7b3f0b6056
+  admin_user: pingyeaa
   distraction_free_mode: true # Facebook-like distraction free mode
   # Gitalk's display language depends on user's browser or system environment
   # If you want everyone visiting your site to see a uniform language, you can set a force language value
   # Available values: en | es-ES | fr | ru | zh-CN | zh-TW
-  language:
+  language: zh-CN
 
 
 # ---------------------------------------------------------------
