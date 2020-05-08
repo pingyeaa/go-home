@@ -3,6 +3,7 @@
 <meta name="theme-color" content="{{ theme.android_chrome_color }}">
 <meta name="generator" content="Hexo {{ hexo_version }}">
 <meta name="baidu_union_verify" content="3fc964d93642ee5a51a919174187bf7a">
+<meta name="baidu-site-verification" content="qQyxCd6bKw" />
 
 {%- if theme.favicon.apple_touch_icon %}
   <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for(theme.favicon.apple_touch_icon) }}">
