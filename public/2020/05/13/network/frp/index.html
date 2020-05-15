@@ -22,28 +22,25 @@
     var CONFIG = {"hostname":"pingyeaa.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="最近机缘巧合的购置了域名和服务器，不用实在是浪费，再加上一直没有属于自己的个人网站，所以打算用hexo在服务器上玩一下，这样也就不用再纠结用Github pages还是Gitee pages了。当然，今天的主题并不是博客搭建，而是如何利用Github的钩子，将博客代码部署到服务器上。 毕竟Github的钩子已经历史悠久了，网上有很多开源项目可以拿来用，所以我并没有造轮子，而是去找了5K star的">
+  <meta name="description" content="背景作为一名程序员，家里多多少少会有一些落了灰的电脑，如果把闲置的电脑变成服务器，不仅有良好的配置，还能用来做各种测试，那就再好不过了。但是局域网的设备怎么被外网访问呢？这就靠内网穿透来实现了。 内网穿透又叫 NAT 穿透，常用的工具有很多，比如 ngrok、花生壳、frp等，因为我使用的是 frp，这也是本篇文章的主题。   NAT 是在 IP 数据包通过路由器或防火墙的时候重写 IP 地址的技">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何用Github钩子做自动部署">
-<meta property="og:url" content="https://pingyeaa.com/2020/04/22/other/github-webhooks/index.html">
+<meta property="og:title" content="如何使用 frp 实现内网穿透">
+<meta property="og:url" content="https://pingyeaa.com/2020/05/13/network/frp/index.html">
 <meta property="og:site_name" content="平也">
-<meta property="og:description" content="最近机缘巧合的购置了域名和服务器，不用实在是浪费，再加上一直没有属于自己的个人网站，所以打算用hexo在服务器上玩一下，这样也就不用再纠结用Github pages还是Gitee pages了。当然，今天的主题并不是博客搭建，而是如何利用Github的钩子，将博客代码部署到服务器上。 毕竟Github的钩子已经历史悠久了，网上有很多开源项目可以拿来用，所以我并没有造轮子，而是去找了5K star的">
+<meta property="og:description" content="背景作为一名程序员，家里多多少少会有一些落了灰的电脑，如果把闲置的电脑变成服务器，不仅有良好的配置，还能用来做各种测试，那就再好不过了。但是局域网的设备怎么被外网访问呢？这就靠内网穿透来实现了。 内网穿透又叫 NAT 穿透，常用的工具有很多，比如 ngrok、花生壳、frp等，因为我使用的是 frp，这也是本篇文章的主题。   NAT 是在 IP 数据包通过路由器或防火墙的时候重写 IP 地址的技">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png">
-<meta property="og:image" content="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png">
-<meta property="og:image" content="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541102651.png">
-<meta property="og:image" content="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541394355.png">
-<meta property="og:image" content="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541482026.png">
-<meta property="article:published_time" content="2020-04-22T02:27:34.000Z">
-<meta property="article:modified_time" content="2020-05-07T16:19:37.143Z">
+<meta property="og:image" content="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1589543547681.png">
+<meta property="og:image" content="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1589544730493.png">
+<meta property="article:published_time" content="2020-05-13T12:19:38.000Z">
+<meta property="article:modified_time" content="2020-05-15T14:44:57.427Z">
 <meta property="article:author" content="平也">
-<meta property="article:tag" content="github">
-<meta property="article:tag" content="webhooks">
-<meta property="article:tag" content="钩子">
+<meta property="article:tag" content="frp">
+<meta property="article:tag" content="内网穿透">
+<meta property="article:tag" content="golang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png">
+<meta name="twitter:image" content="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1589543547681.png">
 
-<link rel="canonical" href="https://pingyeaa.com/2020/04/22/other/github-webhooks/">
+<link rel="canonical" href="https://pingyeaa.com/2020/05/13/network/frp/">
 
 
 <script id="page-configurations">
@@ -56,7 +53,7 @@
   };
 </script>
 
-  <title>如何用Github钩子做自动部署 | 平也</title>
+  <title>如何使用 frp 实现内网穿透 | 平也</title>
   
 
 
@@ -222,7 +219,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pingyeaa.com/2020/04/22/other/github-webhooks/">
+    <link itemprop="mainEntityOfPage" href="https://pingyeaa.com/2020/05/13/network/frp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -235,7 +232,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          如何用Github钩子做自动部署
+          如何使用 frp 实现内网穿透
         </h1>
 
         <div class="post-meta">
@@ -245,7 +242,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-04-22 10:27:34" itemprop="dateCreated datePublished" datetime="2020-04-22T10:27:34+08:00">2020-04-22</time>
+              <time title="创建时间：2020-05-13 20:19:38" itemprop="dateCreated datePublished" datetime="2020-05-13T20:19:38+08:00">2020-05-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,7 +250,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
                 </span>
             </span>
 
@@ -276,49 +273,55 @@
 
       
 
-        <p>最近机缘巧合的购置了域名和服务器，不用实在是浪费，再加上一直没有属于自己的个人网站，所以打算用hexo在服务器上玩一下，这样也就不用再纠结用Github pages还是Gitee pages了。当然，今天的主题并不是博客搭建，而是如何利用Github的钩子，将博客代码部署到服务器上。</p>
-<p>毕竟Github的钩子已经历史悠久了，网上有很多开源项目可以拿来用，所以我并没有造轮子，而是去找了5K star的开源Go项目<code>webhook</code>，这个工具的作用是接收Github仓库的变动通知，然后调用你配置好的shell脚本，脚本可以写上代码拉取的命令或是编译的操作等，具体根据个人需求而定。简而言之，它只起着拉通Github与你服务器的作用。</p>
-<p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587526481705.png" alt="file"></p>
-<h3 id="webhook工具安装"><a href="#webhook工具安装" class="headerlink" title="webhook工具安装"></a>webhook工具安装</h3><p>因为webhook是Go语言开发的，所以要先安装Go语言。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y golang</span><br></pre></td></tr></table></figure>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>作为一名程序员，家里多多少少会有一些落了灰的电脑，如果把闲置的电脑变成服务器，不仅有良好的配置，还能用来做各种测试，那就再好不过了。但是局域网的设备怎么被外网访问呢？这就靠内网穿透来实现了。</p>
+<p>内网穿透又叫 <a href="#nat">NAT</a> 穿透，常用的工具有很多，比如 ngrok、花生壳、frp等，因为我使用的是 frp，这也是本篇文章的主题。</p>
+<p><span id="nat"></span></p>
+<blockquote>
+<p>NAT 是在 IP 数据包通过路由器或防火墙的时候重写 IP 地址的技术。因为现在的公网 IP 数量有限，国家不能给每个设备分配一个公网 IP，所以只能多台计算机共用一个公网 IP 对外通讯，这样就需要进行网络转换，而 NAT 的目的正是如此。</p>
+</blockquote>
+<h2 id="基本实现原理"><a href="#基本实现原理" class="headerlink" title="基本实现原理"></a>基本实现原理</h2><p>frp 分为服务端与客户端，前者运行在有公网 IP 的服务器上，后者运行在局域网内的设备上，服务端默认会先开放 7000 端口，然后客户端与其相连。</p>
+<p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1589543547681.png" alt=""></p>
+<p>同时客户端可以开启用于 ssh 的端口，与服务端的某个端口做映射，这样我们在终端访问服务端的端口时，会自动转发到客户端去。</p>
+<p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1589544730493.png" alt=""></p>
+<p>除了 ssh 端口之外，frp 还支持 web 端口来接收 http 访问。</p>
+<h2 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a>安装使用</h2><p>目前需要公网服务器、内网服务器各一台，我的内网服务器重装了 linux 系统，方便试验各类工具。</p>
+<h3 id="服务端安装配置"><a href="#服务端安装配置" class="headerlink" title="服务端安装配置"></a>服务端安装配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.33.0/frp_0.33.0_linux_amd64.tar.gz</span><br><span class="line">tar zxvf frp_0.33.0_linux_amd64.tar.gz</span><br><span class="line">cd frp_0.33.0_linux_amd64/</span><br></pre></td></tr></table></figure>
 
-<p>然后就可以用go命令安装webhook了。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/adnanh/webhook</span><br></pre></td></tr></table></figure>
+<p>服务端的配置文件是 frps.ini，默认绑定 7000 端口，如果购置了云服务器，注意打开 7000 端口。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br></pre></td></tr></table></figure>
 
-<p>命令安装位置可以通过<code>go env</code>查看，GOPATH就是命令安装路径，比如我的命令就安装在/root/go/bin/webhook。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">go env</span><br><span class="line">...</span><br><span class="line">GOOS="linux"</span><br><span class="line">GOPATH="/root/go"</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>通过 fprs 二进制文件启动 frp 服务。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini</span><br></pre></td></tr></table></figure>
 
-<h3 id="生成ssh-key"><a href="#生成ssh-key" class="headerlink" title="生成ssh key"></a>生成ssh key</h3><p>在编写脚本之前确保服务器有权限拉取github代码，如果已经做了配置可跳过本节去看<a href="#部署脚本编写">部署脚本编写</a>。ssh key是代码托管平台（github、gitee、coding、gitlab等）鉴别你是否有权拉取代码的身份标识，生成只需一行命令和一路回车就行了。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa): </span><br><span class="line">Enter passphrase (empty for no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:M6sCf/J/hOu3zLxMkFUVmv3iWIa30CfbxiWqmWCt1YE root@iZwz96y36tk2ecnykzituxZ</span><br><span class="line">The key's randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|            ..o. |</span><br><span class="line">|           . o   |</span><br><span class="line">|          . o    |</span><br><span class="line">|       . o .     |</span><br><span class="line">|      E S.  .    |</span><br><span class="line">|  .  . ..Oo ..   |</span><br><span class="line">|   oo o ==Boo .  |</span><br><span class="line">|   .++.+o#== .   |</span><br><span class="line">|    .=*+=+@o     |</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
+<p>如下提示即是安装成功。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2020/05/15 22:16:29 [I] [service.go:178] frps tcp listen on 0.0.0.0:7000</span><br><span class="line">2020/05/15 22:16:29 [I] [root.go:209] start frps success</span><br><span class="line">2020/05/15 22:16:38 [I] [service.go:432] [e3c5096bd4291972] client login info: ip [14.114.230.168:44422] version [0.24.1] hostname [] os [linux] arch [amd64]</span><br><span class="line">2020/05/15 22:16:38 [I] [tcp.go:63] [e3c5096bd4291972] [ssh] tcp proxy listen port [7001]</span><br><span class="line">2020/05/15 22:16:38 [I] [control.go:445] [e3c5096bd4291972] new proxy [ssh] success</span><br></pre></td></tr></table></figure>
 
-<p>生成后可通过<code>cat ~/.ssh/id_rsa.pub</code>命令查看，最后将key加入github即可，加法不再赘述，请自行谷歌。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br><span class="line"></span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQHBAAABAQCv7LGVJUFdcLL+HZyRFTQIQCdre61Gch76lDVpmWSX9BGGRU3iQS7EU5qApFn1VSvt+yf4rMt2LEkuxGCm1wIyBKZ6LYDViZBeTAfx4BcM1mcpxOX6I/+r07mQ4llTz+poQB1Zp9Y60uk0tbGOVWlCoDBEvf9qeEnQ0qEczEkv7wcawV6pVhlXjFKZgq0EOQbCYoWMvPUl+dwDbTcl/h+7At1nlgfF7IuRHlKf18qvgnTRT2wpiuz4pWdoAi8LcY1JiR1z5OB0oCJ2euhyDND39G2NxZRS1FIVdgCEvioHtdoHOSoWBlcSj0fLFSnscBfRBrCd7yhOP7fFKfrowHMj root@iZwz96y36tk2ecnykzituxZ</span><br></pre></td></tr></table></figure>
+<h3 id="客户端安装配置"><a href="#客户端安装配置" class="headerlink" title="客户端安装配置"></a>客户端安装配置</h3><p>把自己的破电脑拿出来，以同样的方式下载 frp。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.33.0/frp_0.33.0_linux_amd64.tar.gz</span><br><span class="line">tar zxvf frp_0.33.0_linux_amd64.tar.gz</span><br><span class="line">cd frp_0.33.0_linux_amd64/</span><br></pre></td></tr></table></figure>
 
-<h3 id="部署脚本编写"><a href="#部署脚本编写" class="headerlink" title="部署脚本编写"></a>部署脚本编写</h3><p>该shell脚本的主要目的是从github拉取代码，脚本内容很简单，只做了目录的简要判断，代码目录存在则更新，不存在则克隆仓库，工作目录和仓库名称、地址请换成自己的。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cd /home/www/website</span><br><span class="line"></span><br><span class="line">if [ ! -d "go-home" ]; then</span><br><span class="line">  git clone https://github.com/pingyeaa/go-home.git</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">cd go-home</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<p>客户端的配置文件是 frpc.ini。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = 127.0.0.1</span><br><span class="line">server_port = 7000</span><br><span class="line"></span><br><span class="line">[ssh]</span><br><span class="line">type = tcp</span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 22</span><br><span class="line">remote_port = 6000</span><br></pre></td></tr></table></figure>
 
-<h3 id="webhook配置与启动"><a href="#webhook配置与启动" class="headerlink" title="webhook配置与启动"></a>webhook配置与启动</h3><p>编写配置文件hooks.json，格式如下。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"deploy-webhook"</span>,</span><br><span class="line">    <span class="attr">"execute-command"</span>: <span class="string">"deploy.sh"</span>,</span><br><span class="line">    <span class="attr">"command-working-directory"</span>: <span class="string">"/home"</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
+<p>common 为通用配置</p>
 <ul>
-<li>id：钩子的id，可自定义</li>
-<li>execute-command：要执行的脚本名，就是刚才编写的部署脚本</li>
-<li>command-working-directory：脚本所在目录</li>
+<li>server_addr 为公网服务器 IP 地址</li>
+<li>server_port 为公网服务器配置的 7000 端口</li>
 </ul>
-<p>完成后通过webhook命令启动，可以看到id为deploy-webhook的配置已经加载了，我们需要注意的是监听的端口和路径，等下要用到。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/root/go/bin/webhook -hooks hooks.json -verbose</span><br><span class="line"></span><br><span class="line">[webhook] 2020/04/22 15:18:22 version 2.6.11 starting</span><br><span class="line">[webhook] 2020/04/22 15:18:22 setting up os signal watcher</span><br><span class="line">[webhook] 2020/04/22 15:18:22 attempting to load hooks from hooks.json</span><br><span class="line">[webhook] 2020/04/22 15:18:22 found 1 hook(s) in file</span><br><span class="line">[webhook] 2020/04/22 15:18:22   loaded: deploy-webhook</span><br><span class="line">[webhook] 2020/04/22 15:18:22 serving hooks on http://0.0.0.0:9000/hooks/&#123;id&#125;</span><br><span class="line">[webhook] 2020/04/22 15:18:22 os signal watcher ready</span><br></pre></td></tr></table></figure>
+<p>ssh 用于终端命令行访问</p>
+<ul>
+<li>type 连接类型，默认为 tcp</li>
+<li>local_ip 本地  IP</li>
+<li>local_port 用于 ssh 的端口号，默认 22</li>
+<li>remote_port 映射的服务端端口，访问该端口时默认转发到客户端的 22 端口</li>
+</ul>
+<p>启动客户端进程</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc -c ./frpc.ini</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://0.0.0.0:9000/hooks/&#123;id&#125;</span><br></pre></td></tr></table></figure>
+<p>如有以下提示则代表与服务端连接成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2020/05/15 22:34:49 [I] [service.go:282] [9bc650122a538aab] login to server success, get run id [9bc650122a538aab], server udp port [0]</span><br><span class="line">2020/05/15 22:34:49 [I] [proxy_manager.go:144] [9bc650122a538aab] proxy added: [ssh]</span><br><span class="line">2020/05/15 22:34:49 [I] [control.go:179] [9bc650122a538aab] [ssh] start proxy success</span><br></pre></td></tr></table></figure>
 
-<h3 id="Github-Webhooks配置"><a href="#Github-Webhooks配置" class="headerlink" title="Github Webhooks配置"></a>Github Webhooks配置</h3><p>现在服务器已经启动了webhook程序监听9000端口，接下来仅需要告诉Github这个地址和端口就好了。</p>
-<p>打开仓库设置页，添加webhook。</p>
-<p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587523289550.png" alt=""></p>
-<p>配置webhooks，Payload URL就是要通知的地址，把刚才打印出的端口和路径填上即可，其他默认。</p>
-<p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541102651.png" alt="file"></p>
-<p>现在可以提交代码测试了，如果推送失败Github中会有错误提示，同样的，成功不仅在Github中能看到，服务器的打印日志也有记录。</p>
-<p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541394355.png" alt="file"></p>
-<p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1587541482026.png" alt="file"></p>
-
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>启动完成后就可以通过 ssh 连接到内网服务器了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 6000 enoch@xxx.xx.xxx.xxx</span><br></pre></td></tr></table></figure>
 
       <img src="/images/qrcode.png"></img>
 
@@ -351,7 +354,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://pingyeaa.com/2020/04/22/other/github-webhooks/" title="如何用Github钩子做自动部署">https://pingyeaa.com/2020/04/22/other/github-webhooks/</a>
+    <a href="https://pingyeaa.com/2020/05/13/network/frp/" title="如何使用 frp 实现内网穿透">https://pingyeaa.com/2020/05/13/network/frp/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -362,9 +365,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/github/" rel="tag"># github</a>
-              <a href="/tags/webhooks/" rel="tag"># webhooks</a>
-              <a href="/tags/%E9%92%A9%E5%AD%90/" rel="tag"># 钩子</a>
+              <a href="/tags/frp/" rel="tag"># frp</a>
+              <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" rel="tag"># 内网穿透</a>
+              <a href="/tags/golang/" rel="tag"># golang</a>
           </div>
 
         
@@ -372,11 +375,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/04/23/os/supervisor/" rel="next" title="进程管理工具 Supervisor">
-      进程管理工具 Supervisor <i class="fa fa-chevron-right"></i>
+    <a href="/2020/04/23/os/supervisor/" rel="prev" title="进程管理工具 Supervisor">
+      <i class="fa fa-chevron-left"></i> 进程管理工具 Supervisor
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -436,7 +439,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook工具安装"><span class="nav-number">1.</span> <span class="nav-text">webhook工具安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成ssh-key"><span class="nav-number">2.</span> <span class="nav-text">生成ssh key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署脚本编写"><span class="nav-number">3.</span> <span class="nav-text">部署脚本编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook配置与启动"><span class="nav-number">4.</span> <span class="nav-text">webhook配置与启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Github-Webhooks配置"><span class="nav-number">5.</span> <span class="nav-text">Github Webhooks配置</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本实现原理"><span class="nav-number">2.</span> <span class="nav-text">基本实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装使用"><span class="nav-number">3.</span> <span class="nav-text">安装使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端安装配置"><span class="nav-number">3.1.</span> <span class="nav-text">服务端安装配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端安装配置"><span class="nav-number">3.2.</span> <span class="nav-text">客户端安装配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">3.3.</span> <span class="nav-text">测试</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -627,7 +630,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'blog-talk',
       owner       : 'pingyeaa',
       admin       : ['pingyeaa'],
-      id          : '9ec435dc2142222a8e96fb4a58c80646',
+      id          : '6a224041777183a6885bb9c21c2e802e',
         language: 'zh-CN',
       distractionFreeMode: true
     });

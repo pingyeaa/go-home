@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>如何使用 frp 实现内网穿透</title>
+      <link href="/2020/05/13/network/frp/"/>
+      <url>/2020/05/13/network/frp/</url>
+      
+        <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>作为一名程序员，家里多多少少会有一些落了灰的电脑，如果把闲置的电脑变成服务器，不仅有良好的配置，还能用来做各种测试，那就再好不过了。但是局域网的设备怎么被外网访问呢？这就靠内网穿透来实现了。</p><p>内网穿透又叫 <a href="#nat">NAT</a> 穿透，常用的工具有很多，比如 ngrok、花生壳、frp等，因为我使用的是 frp，这也是本篇文章的主题。</p><p><span id="nat"></span></p><blockquote><p>NAT 是在 IP 数据包通过路由器或防火墙的时候重写 IP 地址的技术。因为现在的公网 IP 数量有限，国家不能给每个设备分配一个公网 IP，所以只能多台计算机共用一个公网 IP 对外通讯，这样就需要进行网络转换，而 NAT 的目的正是如此。</p></blockquote><h2 id="基本实现原理"><a href="#基本实现原理" class="headerlink" title="基本实现原理"></a>基本实现原理</h2><p>frp 分为服务端与客户端，前者运行在有公网 IP 的服务器上，后者运行在局域网内的设备上，服务端默认会先开放 7000 端口，然后客户端与其相连。</p><p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1589543547681.png" alt=""></p><p>同时客户端可以开启用于 ssh 的端口，与服务端的某个端口做映射，这样我们在终端访问服务端的端口时，会自动转发到客户端去。</p><p><img src="https://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1589544730493.png" alt=""></p><p>除了 ssh 端口之外，frp 还支持 web 端口来接收 http 访问。</p><h2 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a>安装使用</h2><p>目前需要公网服务器、内网服务器各一台，我的内网服务器重装了 linux 系统，方便试验各类工具。</p><h3 id="服务端安装配置"><a href="#服务端安装配置" class="headerlink" title="服务端安装配置"></a>服务端安装配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.33.0/frp_0.33.0_linux_amd64.tar.gz</span><br><span class="line">tar zxvf frp_0.33.0_linux_amd64.tar.gz</span><br><span class="line">cd frp_0.33.0_linux_amd64/</span><br></pre></td></tr></table></figure><p>服务端的配置文件是 frps.ini，默认绑定 7000 端口，如果购置了云服务器，注意打开 7000 端口。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br></pre></td></tr></table></figure><p>通过 fprs 二进制文件启动 frp 服务。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini</span><br></pre></td></tr></table></figure><p>如下提示即是安装成功。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2020/05/15 22:16:29 [I] [service.go:178] frps tcp listen on 0.0.0.0:7000</span><br><span class="line">2020/05/15 22:16:29 [I] [root.go:209] start frps success</span><br><span class="line">2020/05/15 22:16:38 [I] [service.go:432] [e3c5096bd4291972] client login info: ip [14.114.230.168:44422] version [0.24.1] hostname [] os [linux] arch [amd64]</span><br><span class="line">2020/05/15 22:16:38 [I] [tcp.go:63] [e3c5096bd4291972] [ssh] tcp proxy listen port [7001]</span><br><span class="line">2020/05/15 22:16:38 [I] [control.go:445] [e3c5096bd4291972] new proxy [ssh] success</span><br></pre></td></tr></table></figure><h3 id="客户端安装配置"><a href="#客户端安装配置" class="headerlink" title="客户端安装配置"></a>客户端安装配置</h3><p>把自己的破电脑拿出来，以同样的方式下载 frp。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.33.0/frp_0.33.0_linux_amd64.tar.gz</span><br><span class="line">tar zxvf frp_0.33.0_linux_amd64.tar.gz</span><br><span class="line">cd frp_0.33.0_linux_amd64/</span><br></pre></td></tr></table></figure><p>客户端的配置文件是 frpc.ini。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = 127.0.0.1</span><br><span class="line">server_port = 7000</span><br><span class="line"></span><br><span class="line">[ssh]</span><br><span class="line">type = tcp</span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 22</span><br><span class="line">remote_port = 6000</span><br></pre></td></tr></table></figure><p>common 为通用配置</p><ul><li>server_addr 为公网服务器 IP 地址</li><li>server_port 为公网服务器配置的 7000 端口</li></ul><p>ssh 用于终端命令行访问</p><ul><li>type 连接类型，默认为 tcp</li><li>local_ip 本地  IP</li><li>local_port 用于 ssh 的端口号，默认 22</li><li>remote_port 映射的服务端端口，访问该端口时默认转发到客户端的 22 端口</li></ul><p>启动客户端进程</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc -c ./frpc.ini</span><br></pre></td></tr></table></figure><p>如有以下提示则代表与服务端连接成功</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2020/05/15 22:34:49 [I] [service.go:282] [9bc650122a538aab] login to server success, get run id [9bc650122a538aab], server udp port [0]</span><br><span class="line">2020/05/15 22:34:49 [I] [proxy_manager.go:144] [9bc650122a538aab] proxy added: [ssh]</span><br><span class="line">2020/05/15 22:34:49 [I] [control.go:179] [9bc650122a538aab] [ssh] start proxy success</span><br></pre></td></tr></table></figure><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>启动完成后就可以通过 ssh 连接到内网服务器了。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 6000 enoch@xxx.xx.xxx.xxx</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> frp </tag>
+            
+            <tag> 内网穿透 </tag>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>进程管理工具 Supervisor</title>
       <link href="/2020/04/23/os/supervisor/"/>
       <url>/2020/04/23/os/supervisor/</url>
