@@ -61,6 +61,7 @@
 #### 分布式
 
 - [你知道链路追踪的实现原理吗？](https://mp.weixin.qq.com/s/AmBawNPQBJ7CF4xWxb_9Yg)
+- [API 网关 Kong](https://pingyeaa.com/2020/05/16/architecture/gateway-kong/)
 
 #### 数据库
 
