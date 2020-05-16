@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://pingyeaa.com/2020/05/16/architecture/gateway-kong/</loc>
+    
+    <lastmod>2020-05-16T13:59:47.681Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://pingyeaa.com/2020/05/13/network/frp/</loc>
     
     <lastmod>2020-05-15T14:44:57.427Z</lastmod>
