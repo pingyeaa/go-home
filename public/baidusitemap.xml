@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://pingyeaa.com/2020/05/16/architecture/gateway-kong/</loc>
-    <lastmod>2020-05-16</lastmod>
-  </url>  <url>
-    <loc>https://pingyeaa.com/2020/05/13/network/frp/</loc>
-    <lastmod>2020-05-15</lastmod>
-  </url>  <url>
-    <loc>https://pingyeaa.com/2020/04/22/other/github-webhooks/</loc>
-    <lastmod>2020-05-07</lastmod>
-  </url>  <url>
-    <loc>https://pingyeaa.com/2020/04/23/os/supervisor/</loc>
-    <lastmod>2020-05-07</lastmod>
+    <loc>https://pingyeaa.com/2020/10/11/golang/excel/</loc>
+    <lastmod>2020-10-10</lastmod>
   </url>
-</urlset>
+  <url>
+    <loc>https://pingyeaa.com/2020/04/22/other/github-webhooks/</loc>
+    <lastmod>2020-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://pingyeaa.com/2020/04/23/os/supervisor/</loc>
+    <lastmod>2020-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://pingyeaa.com/2020/05/16/architecture/gateway-kong/</loc>
+    <lastmod>2020-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://pingyeaa.com/2020/05/13/network/frp/</loc>
+    <lastmod>2020-10-10</lastmod>
+  </url>
+</urlset> 
