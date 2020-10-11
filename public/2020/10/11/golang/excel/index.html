@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1602413052099.png">
 <meta property="og:image" content="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1602413398061.png">
 <meta property="article:published_time" content="2020-10-11T15:24:19.000Z">
-<meta property="article:modified_time" content="2020-10-11T10:51:23.631Z">
+<meta property="article:modified_time" content="2020-10-11T10:59:36.261Z">
 <meta property="article:author" content="平也">
 <meta property="article:tag" content="excel">
 <meta name="twitter:card" content="summary">
@@ -280,7 +280,7 @@
 
         <h3 id="关键术语介绍"><a href="#关键术语介绍" class="headerlink" title="关键术语介绍"></a>关键术语介绍</h3><p>为了方便开源库的快速上手，我们先来了解 excel 中的几个关键术语，如下图所示，①为sheet，也就是表格中的页签；②为row，代表 excel 中的一行；③为cell，代表 excel 中的一个单元格。</p>
 <p><img src="http://pingyeaa.oss-cn-shenzhen.aliyuncs.com/image-1602348679727.png" alt=""></p>
-<p>正常情况下，创建一个表格的基本流程是打开 wps 点击新建，这时会默认创建一个 sheet，然后在该 sheet 中的第一行填写表头，接下来根据表头逐行填充内容，最后将文件另存为到硬盘的某个位置。其实我们利用 Golang 的开源库创建 excel 时也是如此，下面我们来创建一个简易的表格。</p>
+<p>正常情况下，创建一个表格的基本流程是打开 wps 点击新建，这时会默认创建一个 sheet，然后在该 sheet 中的第一行填写表头，接下来根据表头逐行填充内容，最后将文件另存为到硬盘的某个位置。这与 Golang 开源库创建 excel 的流程基本相同，下面演示一个极简表格的创建。</p>
 <h3 id="创建表格"><a href="#创建表格" class="headerlink" title="创建表格"></a>创建表格</h3><p>创建表格前需要先引入 excel 库，我们以比较热门的 <strong>tealeg/xlsx</strong> 库为例。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/tealeg/xlsx</span><br></pre></td></tr></table></figure>
 
