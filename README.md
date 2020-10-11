@@ -53,6 +53,7 @@
 	- [Go语言库系列之dotsql](https://mp.weixin.qq.com/s/LoKHbXDYszkSm2qkEYgGZg)
 	- [Go语言库系列之aurora](https://mp.weixin.qq.com/s/eVmTAnNf3H-jvVR2v2BVYw)
 	- [Go语言库系列之email](https://mp.weixin.qq.com/s/MnwmRPG-R6corxNYvlZ4Yw)
+	- [Golang是如何操作excel的？](https://www.pingyeaa.com/2020/10/11/golang/excel/)
 
 #### 工具
 
